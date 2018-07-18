@@ -1,0 +1,13 @@
+# root file_name                                               ; Theory_XS fb;  Event_Number
+WprimeToWZToWlepZhad_narrow_M-1000_13TeV-madgraph.root  ; 102.236 ; 49922
+WprimeToWZToWlepZhad_narrow_M-1200_13TeV-madgraph.root  ; 56.357 ; 49919
+WprimeToWZToWlepZhad_narrow_M-1400_13TeV-madgraph.root  ; 31.283 ; 49912
+WprimeToWZToWlepZhad_narrow_M-1600_13TeV-madgraph.root  ; 17.844 ; 49908
+WprimeToWZToWlepZhad_narrow_M-1800_13TeV-madgraph.root  ; 10.458 ; 49923
+WprimeToWZToWlepZhad_narrow_M-2000_13TeV-madgraph.root  ; 6.273 ; 49922
+WprimeToWZToWlepZhad_narrow_M-2500_13TeV-madgraph.root  ; 1.8842 ; 49695
+WprimeToWZToWlepZhad_narrow_M-3000_13TeV-madgraph.root  ; 0.6039 ; 49893
+WprimeToWZToWlepZhad_narrow_M-3500_13TeV-madgraph.root  ; 0.19991 ; 49872
+WprimeToWZToWlepZhad_narrow_M-4000_13TeV-madgraph.root  ; 0.064901 ; 48659
+WprimeToWZToWlepZhad_narrow_M-4500_13TeV-madgraph.root  ; 0.021981 ; 49849
+

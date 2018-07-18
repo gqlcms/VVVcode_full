@@ -1,0 +1,12 @@
+# root file_name                                               ; Theory_XS fb;  Event_Number
+#16El-B.root    ; 1.  ; 1
+#16El-C.root    ; 1.  ; 1
+#16El-D.root    ; 1.  ; 1
+#16El-E.root    ; 1.  ; 1
+#16El-F.root    ; 1.  ; 1
+#16El-G.root    ; 1.  ; 1
+#16El-H.root    ; 1.  ; 1
+singleElectron-17B-v2.root    ; 1.  ; 1
+singleElectron-17C-v2.root    ; 1.  ; 1
+singleElectron-17D-v2.root    ; 1.  ; 1
+

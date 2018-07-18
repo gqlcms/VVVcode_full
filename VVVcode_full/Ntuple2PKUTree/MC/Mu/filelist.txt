@@ -1,0 +1,31 @@
+# root file_name                                               ; Theory_XS fb;  Event_Number
+BulkGravWW600.root  ;  284.8  ;  49930
+BulkGravWW800.root  ;  55.7  ;  49926
+BulkGravWW1000.root ;  15.4  ;  49922
+BulkGravWW1200.root ;  6.3 ;  49916
+BulkGravWW1400.root ;  2.58  ;  49925
+BulkGravWW1600.root ;  1.06  ;  49932
+BulkGravWW1800.root ;  0.43  ;  49913
+BulkGravWW2000.root ;  0.21  ;  44920
+BulkGravWW2500.root ;  0.0425 ;  49109
+BulkGravWW3000.root ;  0.0114  ;  49890
+BulkGravWW3500.root ;  0.00258  ;  49901
+BulkGravWW4000.root ;  0.000713  ;  49708
+BulkGravWW4500.root ;  0.0001984  ;  49891
+ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1.root   ;  3680.     ; 999175
+ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1.root  ;  80950.   ;  38769239
+ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1.root  ;  136020.  ; 67168870
+ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1.root   ;  35600.  ; 6923936
+ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1.root   ;  35600.  ; 6943339
+TT_TuneCUETP8M2T4_13TeV-powheg-pythia8.root  ; 831760.  ; 74928529
+WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root  ; 1345000. ; 39576355
+WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root  ; 359700. ; 4944375
+WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root  ; 48910. ; 5788701
+WJetsToLNu_HT-600To800_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root  ; 12050. ; 14888039
+WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root ; 5501.  ; 1542254
+WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root; 1329. ; 244073
+WJetsToLNu_HT-2500ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root   ; 32.16 ; 2378741
+WWToLNuQQ_13TeV-powheg.root   ;  49997.  ; 1996956
+WZTo1L1Nu2Q_13TeV_amcatnloFXFX_madspin_pythia8.root   ; 10710. ; 24192132
+ZZTo2L2Q_13TeV_amcatnloFXFX_madspin_pythia8.root   ; 3220.  ; 15031633
+
