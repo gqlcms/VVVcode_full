@@ -1363,7 +1363,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
  		}//end of if Wkk
 
 
-		if( abs(*genParticles)[ik].pdgId()==9000025 ) 
+		if( abs((*genParticles)[ik].pdgId())==9000025 ) 
 		{//if Radion
                    gen_rad_m=(*genParticles)[ik].mass();
 		   gen_rad_pt=(*genParticles)[ik].pt();
