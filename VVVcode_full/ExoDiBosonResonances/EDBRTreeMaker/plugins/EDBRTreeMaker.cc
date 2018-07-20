@@ -202,6 +202,7 @@ private:
   int     nBX;
   //Gen Level
   double gen_gra_m, gen_gra_pt, gen_gra_eta;
+  double gen_rad_m, gen_rad_pt, gen_rad_eta;
   double gen_ele_pt, gen_ele_eta, gen_ele_phi, gen_ele_e;
   double gen_mu_pt, gen_mu_eta, gen_mu_phi, gen_mu_e;
   double genmatch_ele_pt, genmatch_ele_eta, genmatch_ele_phi, genmatch_ele_e, genmatch_ele_dr;
@@ -674,6 +675,9 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
   outTree_->Branch("gen_gra_m"        ,&gen_gra_m       ,"gen_gra_m/D"       );
   outTree_->Branch("gen_gra_pt"        ,&gen_gra_pt       ,"gen_gra_pt/D"       );
   outTree_->Branch("gen_gra_eta"        ,&gen_gra_eta       ,"gen_gra_eta/D"       );
+  outTree_->Branch("gen_rad_m"        ,&gen_rad_m       ,"gen_rad_m/D"       );
+  outTree_->Branch("gen_rad_pt"        ,&gen_rad_pt       ,"gen_rad_pt/D"       );
+  outTree_->Branch("gen_rad_eta"        ,&gen_rad_eta       ,"gen_rad_eta/D"       );
   outTree_->Branch("gen_ele_pt"        ,&gen_ele_pt       ,"gen_ele_pt/D"       );
   outTree_->Branch("gen_ele_eta"        ,&gen_ele_eta       ,"gen_ele_eta/D"       );
   outTree_->Branch("gen_ele_phi"        ,&gen_ele_phi       ,"gen_ele_phi/D"       );
@@ -1311,7 +1315,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                    genantitop_phi = ptop->phi();
                    genantitop_mass = ptop->mass();}
 
-		if( abs(*genParticles)[ik].pdgId()==9000024 || abs(*genParticles)[ik].pdgId()==6 ) 
+		if( abs((*genParticles)[ik].pdgId())==9000024 || abs((*genParticles)[ik].pdgId())==6 ) 
 		{//if Wkk
                    gen_gra_m=(*genParticles)[ik].mass();
 		   gen_gra_pt=(*genParticles)[ik].pt();
@@ -1363,7 +1367,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		{//if Radion
                    gen_rad_m=(*genParticles)[ik].mass();
 		   gen_rad_pt=(*genParticles)[ik].pt();
-
+	           gen_rad_eta=(*genParticles)[ik].eta();
                    for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
                    {//loop on Radion daughter
 
@@ -2081,6 +2085,9 @@ void EDBRTreeMaker::setDummyValues() {
      gen_gra_m      = -99;
      gen_gra_pt     = -99;
      gen_gra_eta     = -99;
+     gen_rad_m      = -99;
+     gen_rad_pt     = -99;
+     gen_rad_eta     = -99;
      gen_ele_pt     = -99;
      gen_ele_eta    = -99;
      gen_ele_phi    = -99;
