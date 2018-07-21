@@ -384,11 +384,18 @@ process.source.fileNames = [
 #'/store/mc/RunIISummer16MiniAODv2/QCD_HT1000to1500_BGenFilter_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/2C3623F9-7FBE-E611-AC00-002590E7D7DE.root'
 #'file:EXO-RunIISummer16MiniAODv2-07193.root'
 #'file:/eos/cms/store/user/lewang/WWW-v1/crab_WWW-MA/171024_113209/0000/EXO-RunIISummer16MiniAODv2-07193_19.root'
-'/store/mc/RunIIFall17MiniAODv2/WkkToWRadionToWWW_M4000-R0-5_TuneCP5_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/70000/F2D0E7A2-C54D-E811-B022-FA163E1445BD.root'
-
+#'/store/mc/RunIIFall17MiniAODv2/WkkToWRadionToWWW_M4000-R0-5_TuneCP5_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/70000/F2D0E7A2-C54D-E811-B022-FA163E1445BD.root'
+#'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_95.root',
+#'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_96.root',
+#'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_97.root',
+#'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_98.root',
+#'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_99.root',
+'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v2-3000/crab_WWW-MA-3000-5/180716_091734/0000/EXO-RunIISummer16MiniAODv2-07193_99.root',
+'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v2-3000/crab_WWW-MA-3000-5/180716_091734/0000/EXO-RunIISummer16MiniAODv2-07193_98.root',
+'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v2-3000/crab_WWW-MA-3000-5/180716_091734/0000/EXO-RunIISummer16MiniAODv2-07193_97.root',
 ]
 
-process.maxEvents.input = 10000
+process.maxEvents.input = 5000
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.MessageLogger.cerr.FwkReport.limit = 99999999

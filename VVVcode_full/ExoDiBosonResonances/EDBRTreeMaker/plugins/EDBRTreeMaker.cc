@@ -201,19 +201,23 @@ private:
   double  npT, npIT;
   int     nBX;
   //Gen Level
-  double gen_gra_m, gen_gra_pt;
+  double gen_gra_m, gen_gra_pt, gen_gra_eta;
+  double gen_rad_m, gen_rad_pt, gen_rad_eta;
   double gen_ele_pt, gen_ele_eta, gen_ele_phi, gen_ele_e;
-  double gen_wp_pt, gen_wp_eta, gen_wp_phi, gen_wp_e;
-  double gen_wp1_pt, gen_wp1_eta, gen_wp1_phi, gen_wp1_e;
-  double gen_r_pt, gen_r_eta, gen_r_phi, gen_r_e;
-  double gen_wm_pt, gen_wm_eta, gen_wm_phi, gen_wm_e;
   double gen_mu_pt, gen_mu_eta, gen_mu_phi, gen_mu_e;
   double genmatch_ele_pt, genmatch_ele_eta, genmatch_ele_phi, genmatch_ele_e, genmatch_ele_dr;
   double genmatch_mu_pt, genmatch_mu_eta, genmatch_mu_phi, genmatch_mu_e, genmatch_mu_dr;
+  double gen_ele_pt_2, gen_ele_eta_2, gen_ele_phi_2, gen_ele_e_2;
+  double gen_mu_pt_2, gen_mu_eta_2, gen_mu_phi_2, gen_mu_e_2;
+  double gen_ele_pt_3, gen_ele_eta_3, gen_ele_phi_3, gen_ele_e_3;
+  double gen_mu_pt_3, gen_mu_eta_3, gen_mu_phi_3, gen_mu_e_3;
   double gentop_pt, gentop_eta, gentop_phi, gentop_mass;
   double genantitop_pt, genantitop_eta, genantitop_phi, genantitop_mass;
   double ptGenVlep, etaGenVlep, phiGenVlep, massGenVlep;
   double ptGenVhad, etaGenVhad, phiGenVhad, massGenVhad;
+  double ptGenV_2, etaGenV_2, phiGenV_2, massGenV_2;
+  double ptGenV_3, etaGenV_3, phiGenV_3, massGenV_3;
+    int status_1,status_2, status_3;
   bool IDLoose, IDTight,IDLoose_2, IDTight_2, isHighPt, isHEEP;
   double muchaiso, muneuiso, muphoiso, muPU, muisolation;
   double iso, isoCut, et, trackIso;
@@ -670,31 +674,34 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
   /// Gen Level quantities
   outTree_->Branch("gen_gra_m"        ,&gen_gra_m       ,"gen_gra_m/D"       );
   outTree_->Branch("gen_gra_pt"        ,&gen_gra_pt       ,"gen_gra_pt/D"       );
+  outTree_->Branch("gen_gra_eta"        ,&gen_gra_eta       ,"gen_gra_eta/D"       );
+  outTree_->Branch("gen_rad_m"        ,&gen_rad_m       ,"gen_rad_m/D"       );
+  outTree_->Branch("gen_rad_pt"        ,&gen_rad_pt       ,"gen_rad_pt/D"       );
+  outTree_->Branch("gen_rad_eta"        ,&gen_rad_eta       ,"gen_rad_eta/D"       );
   outTree_->Branch("gen_ele_pt"        ,&gen_ele_pt       ,"gen_ele_pt/D"       );
   outTree_->Branch("gen_ele_eta"        ,&gen_ele_eta       ,"gen_ele_eta/D"       );
   outTree_->Branch("gen_ele_phi"        ,&gen_ele_phi       ,"gen_ele_phi/D"       );
   outTree_->Branch("gen_ele_e"        ,&gen_ele_e       ,"gen_ele_e/D"       );
-    outTree_->Branch("gen_wp_pt"        ,&gen_wp_pt       ,"gen_wp_pt/D"       );
-    outTree_->Branch("gen_wp_eta"        ,&gen_wp_eta       ,"gen_wp_eta/D"       );
-    outTree_->Branch("gen_wp_phi"        ,&gen_wp_phi       ,"gen_wp_phi/D"       );
-    outTree_->Branch("gen_wp_e"        ,&gen_wp_e       ,"gen_wp_e/D"       );
-    outTree_->Branch("gen_r_pt"        ,&gen_r_pt       ,"gen_r_pt/D"       );
-    outTree_->Branch("gen_r_eta"        ,&gen_r_eta       ,"gen_r_eta/D"       );
-    outTree_->Branch("gen_r_phi"        ,&gen_r_phi       ,"gen_r_phi/D"       );
-    outTree_->Branch("gen_r_e"        ,&gen_r_e       ,"gen_r_e/D"       );
-    outTree_->Branch("gen_wp1_pt"        ,&gen_wp1_pt       ,"gen_wp1_pt/D"       );
-    outTree_->Branch("gen_wp1_eta"        ,&gen_wp1_eta       ,"gen_wp1_eta/D"       );
-    outTree_->Branch("gen_wp1_phi"        ,&gen_wp1_phi       ,"gen_wp1_phi/D"       );
-    outTree_->Branch("gen_wp1_e"        ,&gen_wp1_e       ,"gen_wp1_e/D"       );
-    outTree_->Branch("gen_wm_pt"        ,&gen_wm_pt       ,"gen_wm_pt/D"       );
-    outTree_->Branch("gen_wm_eta"        ,&gen_wm_eta       ,"gen_wm_eta/D"       );
-    outTree_->Branch("gen_wm_phi"        ,&gen_wm_phi       ,"gen_wm_phi/D"       );
-    outTree_->Branch("gen_wm_e"        ,&gen_wm_e       ,"gen_wm_e/D"       );
-
   outTree_->Branch("gen_mu_pt"        ,&gen_mu_pt       ,"gen_mu_pt/D"       );
   outTree_->Branch("gen_mu_eta"        ,&gen_mu_eta       ,"gen_mu_eta/D"       );
   outTree_->Branch("gen_mu_phi"        ,&gen_mu_phi       ,"gen_mu_phi/D"       );
   outTree_->Branch("gen_mu_e"        ,&gen_mu_e       ,"gen_mu_e/D"       );
+  outTree_->Branch("gen_ele_pt_2"        ,&gen_ele_pt_2       ,"gen_ele_pt_2/D"       );
+  outTree_->Branch("gen_ele_eta_2"        ,&gen_ele_eta_2       ,"gen_ele_eta_2/D"       );
+  outTree_->Branch("gen_ele_phi_2"        ,&gen_ele_phi_2       ,"gen_ele_phi_2/D"       );
+  outTree_->Branch("gen_ele_e_2"        ,&gen_ele_e_2       ,"gen_ele_e_2/D"       );
+  outTree_->Branch("gen_mu_pt_2"        ,&gen_mu_pt_2       ,"gen_mu_pt_2/D"       );
+  outTree_->Branch("gen_mu_eta_2"        ,&gen_mu_eta_2       ,"gen_mu_eta_2/D"       );
+  outTree_->Branch("gen_mu_phi_2"        ,&gen_mu_phi_2       ,"gen_mu_phi_2/D"       );
+  outTree_->Branch("gen_mu_e_2"        ,&gen_mu_e_2       ,"gen_mu_e_2/D"       );
+  outTree_->Branch("gen_ele_pt_3"        ,&gen_ele_pt_3       ,"gen_ele_pt_3/D"       );
+  outTree_->Branch("gen_ele_eta_3"        ,&gen_ele_eta_3       ,"gen_ele_eta_3/D"       );
+  outTree_->Branch("gen_ele_phi_3"        ,&gen_ele_phi_3       ,"gen_ele_phi_3/D"       );
+  outTree_->Branch("gen_ele_e_3"        ,&gen_ele_e_3       ,"gen_ele_e_3/D"       );
+  outTree_->Branch("gen_mu_pt_3"        ,&gen_mu_pt_3       ,"gen_mu_pt_3/D"       );
+  outTree_->Branch("gen_mu_eta_3"        ,&gen_mu_eta_3       ,"gen_mu_eta_3/D"       );
+  outTree_->Branch("gen_mu_phi_3"        ,&gen_mu_phi_3       ,"gen_mu_phi_3/D"       );
+  outTree_->Branch("gen_mu_e_3"        ,&gen_mu_e_3       ,"gen_mu_e_3/D"       );
   outTree_->Branch("genmatch_ele_pt"        ,&genmatch_ele_pt       ,"genmatch_ele_pt/D"       );
   outTree_->Branch("genmatch_ele_eta"        ,&genmatch_ele_eta       ,"genmatch_ele_eta/D"       );
   outTree_->Branch("genmatch_ele_phi"        ,&genmatch_ele_phi       ,"genmatch_ele_phi/D"       );
@@ -721,6 +728,17 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
   outTree_->Branch("etaGenVhad"        ,&etaGenVhad       ,"etaGenVhad/D"       );
   outTree_->Branch("phiGenVhad"        ,&phiGenVhad       ,"phiGenVhad/D"       );
   outTree_->Branch("massGenVhad"        ,&massGenVhad       ,"massGenVhad/D"       );
+  outTree_->Branch("ptGenV_2"        ,&ptGenV_2       ,"ptGenV_2/D"       );
+  outTree_->Branch("etaGenV_2"        ,&etaGenV_2       ,"etaGenV_2/D"       );
+  outTree_->Branch("phiGenV_2"        ,&phiGenV_2       ,"phiGenV_2/D"       );
+  outTree_->Branch("massGenV_2"        ,&massGenV_2       ,"massGenV_2/D"       );
+  outTree_->Branch("ptGenV_3"        ,&ptGenV_3       ,"ptGenV_3/D"       );
+  outTree_->Branch("etaGenV_3"        ,&etaGenV_3       ,"etaGenV_3/D"       );
+  outTree_->Branch("phiGenV_3"        ,&phiGenV_3       ,"phiGenV_3/D"       );
+  outTree_->Branch("massGenV_3"        ,&massGenV_3       ,"massGenV_3/D"       );
+    outTree_->Branch("status_1"           ,&status_1         ,"status_1/I"          );
+  outTree_->Branch("status_2"           ,&status_2         ,"status_2/I"          );
+  outTree_->Branch("status_3"           ,&status_3         ,"status_3/I"          );
 
   //outTree_->Branch("");
 
@@ -1281,84 +1299,191 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
  
     
 
-// ************************* Gen Level Information******************  //
-   if(RunOnMC_){
-	for( auto p=genParticles->begin(); p!= genParticles->end(); ++p)
-        {}//std::cout<<p->pdgId()<<" "<<p->status()<<std::endl;}
+// ************************* Gen Level Information******************//
+   if(RunOnMC_)
+   {//MC Info
 	  for(size_t ik=0; ik<genParticles->size();ik++)
-	{
-            //std::cout<<(*genParticles)[ik].pdgId()<<" "<<(*genParticles)[ik].status()<<std::endl;
+	{// loop on gen
+              const reco::Candidate* ptop = &(*genParticles)[ik];
+                if(ptop->pdgId()== 6) {
+                   gentop_pt = ptop->pt();
+                   gentop_eta = ptop->eta();
+                   gentop_phi = ptop->phi();
+                   gentop_mass = ptop->mass(); }
+                if(ptop->pdgId()== -6) {
+                   genantitop_pt = ptop->pt();
+                   genantitop_eta = ptop->eta();
+                   genantitop_phi = ptop->phi();
+                   genantitop_mass = ptop->mass();}
 
-//		if( (*genParticles)[ik].pdgId()==5100039 ) // && (*genParticles)[ik].status()==3)//graviton
-//		{
-//			gen_gra_m=(*genParticles)[ik].mass();
-//			gen_gra_pt=(*genParticles)[ik].pt();
+		if( abs((*genParticles)[ik].pdgId())==9000024 || abs((*genParticles)[ik].pdgId())==6 ) 
+		{//if Wkk
+                   gen_gra_m=(*genParticles)[ik].mass();
+		   gen_gra_pt=(*genParticles)[ik].pt();
+		   gen_gra_eta=(*genParticles)[ik].eta();
 
-                        const reco::Candidate* ptop = &(*genParticles)[ik];
-//                                if(ptop->pdgId()== 6 && ptop->status()== 1 && (*genParticles)[ik].isPromptFinalState()>0) {
-                                if(ptop->pdgId()== 6) {
-                                gentop_pt = ptop->pt();
-                                gentop_eta = ptop->eta();
-                                gentop_phi = ptop->phi();
-                                gentop_mass = ptop->mass();
+                   for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
+                   {//loop on Wkk daughter
+                      if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
+                       {//if w
+                         const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
+                         if(pw->daughter(i)!=NULL)
+                         {//loop on w daughter
+                            const reco::Candidate* pl = pw->daughter(i);
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
+                            {//beign of lep-w
+                               ptGenVlep = pw->pt();
+                               etaGenVlep = pw->eta();
+                               phiGenVlep = pw->phi();
+                               massGenVlep = pw->mass();
+                                status_1=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                                const reco::Candidate* pl = pw->daughter(ii);
+                               if(abs(pl->pdgId())==11)
+                               {
+                                 gen_ele_pt=pl->pt();
+                                 gen_ele_eta=pl->eta();
+                                 gen_ele_phi=pl->phi();
+                                 gen_ele_e=pl->energy();
+                                   status_1=1;
+                               }
+                               if(abs(pl->pdgId())==13)
+                               {
+                                 gen_mu_pt=pl->pt();
+                                 gen_mu_eta=pl->eta();
+                                 gen_mu_phi=pl->phi();
+                                 gen_mu_e=pl->energy();
+                                   status_1=2;
+                               }
+                                if(abs(pl->pdgId())==15)
+                                    {
+                                        status_1=3;
+                                    }
                                 }
-//                                if(ptop->pdgId()== -6 && ptop->status()== 1 && (*genParticles)[ik].isPromptFinalState()>0) {
-                                if(ptop->pdgId()== -6) {
-                                genantitop_pt = ptop->pt();
-                                genantitop_eta = ptop->eta();
-                                genantitop_phi = ptop->phi();
-                                genantitop_mass = ptop->mass();
-                                }
-        for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)//loop on graviton daughter
+                             }//end of if lep-w
+        		     if(abs(pl->pdgId())<6) 
+                             {
+			         ptGenVhad = pw->pt();
+			         etaGenVhad = pw->eta();
+			         phiGenVhad = pw->phi();
+			         massGenVhad = pw->mass();
+                                 status_1=4;
+                             }
+			   }//end of loop on w daughter
+                       }//end of if w				 
+                   }//end of loop on Wkk daughter
+ 		}//end of if Wkk
+
+
+		if( abs((*genParticles)[ik].pdgId())==9000025 ) 
+		{//if Radion
+                   gen_rad_m=(*genParticles)[ik].mass();
+		   gen_rad_pt=(*genParticles)[ik].pt();
+	           gen_rad_eta=(*genParticles)[ik].eta();
+                   for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
+                   {//loop on Radion daughter
+
+                      if(((*genParticles)[ik].daughter(i)->pdgId())==24)
+                       {//if w-
+                         const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
+                         if(pw->daughter(i)!=NULL)
+                         {//loop on w daughter
+                            const reco::Candidate* pl = pw->daughter(i);
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)||(abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
+                            {//beign of lep-w
+                               ptGenV_2 = pw->pt();
+                               etaGenV_2 = pw->eta();
+                               phiGenV_2 = pw->phi();
+                               massGenV_2 = pw->mass();
+                               status_2=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                               const reco::Candidate* pl = pw->daughter(ii);
+                               if(abs(pl->pdgId())==11)
+                               {
+                                 gen_ele_pt_2=pl->pt();
+                                 gen_ele_eta_2=pl->eta();
+                                 gen_ele_phi_2=pl->phi();
+                                 gen_ele_e_2=pl->energy();
+                                 status_2=1;  
+                               }
+                               if(abs(pl->pdgId())==13)
+                               {
+                                 gen_mu_pt_2=pl->pt();
+                                 gen_mu_eta_2=pl->eta();
+                                 gen_mu_phi_2=pl->phi();
+                                 gen_mu_e_2=pl->energy();
+                                 status_2=2;  
+                               }
+				if(abs(pl->pdgId())==15)
+                               {
+                                 status_2=3;
+                               }
+                            }
+                             }//end of if lep-w
+        		     if(abs(pl->pdgId())<6) 
+                             {
+                                 status_2=4;  
+                             }
+			   }//end of loop on w daughter
+                       }//end of if w-	
+                      if(((*genParticles)[ik].daughter(i)->pdgId())==-24)
+                       {//if w+
+                         const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
+			//cout<<((*genParticles)[ik].daughter(i)->pdgId())<<endl;
+                         if(pw->daughter(i)!=NULL)
+                         {//loop on w daughter
+                            const reco::Candidate* pl = pw->daughter(i);
+			//cout<<(pl->pdgId())<<endl;
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
+                            {//beign of lep-w
+                               ptGenV_3 = pw->pt();
+                               etaGenV_3 = pw->eta();
+                               phiGenV_3 = pw->phi();
+                               massGenV_3 = pw->mass();
+                               status_3=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                              const reco::Candidate* pl = pw->daughter(ii);
+                               if(abs(pl->pdgId())==11)
+                               {
+                                 gen_ele_pt_3=pl->pt();
+                                 gen_ele_eta_3=pl->eta();
+                                 gen_ele_phi_3=pl->phi();
+                                 gen_ele_e_3=pl->energy();
+                                 status_3=1;  
+                               }
+                               if(abs(pl->pdgId())==13)
+                               {
+                                 gen_mu_pt_3=pl->pt();
+                                 gen_mu_eta_3=pl->eta();
+                                 gen_mu_phi_3=pl->phi();
+                                 gen_mu_e_3=pl->energy();
+                                 status_3=2;  
+                               }
+                               if(abs(pl->pdgId())==15)
+                               {
+                                 status_3=3;  
+                               }
+                            }
+                             }//end of if lep-w
+        		     if(abs(pl->pdgId())<6) 
+                             {
+                                 status_3=4;  
+                             }
+			   }//end of loop on w daughter
+                       }//end of if w+	
+			 
+                   }//end of loop on Radion daughter
+ 		}//end of if Radion
+
+        }//end of loop on gen
+
+        if(gen_mu_pt>0. && mus->size()>0 ) 
         {
-            if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
-            {
-                const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
-                //for(int i=0;pw->daughter(i)!=NULL;i++)//loop on w daughter
-                if(pw->daughter(i)!=NULL)//loop on w daughter
-                {
-                    const reco::Candidate* pl = pw->daughter(i);
-                    //std::cout<< "pl pdgId" << pl->pdgId() << std::endl;
-                    if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==12) || (abs(pl->pdgId())==13) || (abs(pl->pdgId())==14) ){
-                        ptGenVlep = pw->pt();
-                        etaGenVlep = pw->eta();
-                        phiGenVlep = pw->phi();
-                        massGenVlep = pw->mass();
-                        if(abs(pl->pdgId())==11)
-                        {
-                            gen_ele_pt=pl->pt();
-                            gen_ele_eta=pl->eta();
-                            gen_ele_phi=pl->phi();
-                            gen_ele_e=pl->energy();
-                        }
-                        if(abs(pl->pdgId())==13)
-                        {
-                            gen_mu_pt=pl->pt();
-                            gen_mu_eta=pl->eta();
-                            gen_mu_phi=pl->phi();
-                            gen_mu_e=pl->energy();
-                        }
-//					 	genVlep.SetPtEtaPhiE(pw->pt(), pw->eta(), pw->phi(), pw->energy());
-					}//end of w daugter loop
-					//} else {genVhad.SetPtEtaPhiE(pw->pt(), pw->eta(), pw->phi(), pw->energy());}
-					//if (pw->daughter(i)==NULL) genVhad.SetPtEtaPhiE(pw->pt(), pw->eta(), pw->phi(), pw->energy());
-					//if (pw->daughter(i)==NULL) {
-					if(abs(pl->pdgId())<6) {
-						ptGenVhad = pw->pt();
-						etaGenVhad = pw->eta();
-						phiGenVhad = pw->phi();
-						massGenVhad = pw->mass();}
-					}
-				}//end of if w
-			}//end of graviton daughter loop
-//		}//end of graviton
-         }
-
-        if(gen_mu_pt>0. && mus->size()>0 ) {
             double drmumatch=10000.;  size_t mk=0;
-            for(size_t ik=0; ik<mus->size();ik++)    { 
-               double drtemp=deltaR(gen_mu_eta,gen_mu_phi,(*mus)[ik].eta(),(*mus)[ik].phi());    
-               if (drtemp<drmumatch) {drmumatch=drtemp; mk=ik;}
+            for(size_t ik=0; ik<mus->size();ik++)   
+            { 
+              double drtemp=deltaR(gen_mu_eta,gen_mu_phi,(*mus)[ik].eta(),(*mus)[ik].phi());    
+              if (drtemp<drmumatch) {drmumatch=drtemp; mk=ik;}
             } 
             genmatch_mu_pt=(*mus)[mk].pt();
             genmatch_mu_eta=(*mus)[mk].eta();
@@ -1366,14 +1491,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             genmatch_mu_e=(*mus)[mk].energy();
             genmatch_mu_dr=drmumatch;
          }
-
-  
-        if(gen_ele_pt>0. && eles->size()>0) {
-
+        if(gen_ele_pt>0. && eles->size()>0) 
+        {
             double drelematch=10000.;  size_t mk=0;
-            for(size_t ik=0; ik<eles->size();ik++)    {
-               double drtemp=deltaR(gen_ele_eta,gen_ele_phi,(*eles)[ik].eta(),(*eles)[ik].phi());
-               if (drtemp<drelematch) {drelematch=drtemp; mk=ik;}
+            for(size_t ik=0; ik<eles->size();ik++)    
+            {
+              double drtemp=deltaR(gen_ele_eta,gen_ele_phi,(*eles)[ik].eta(),(*eles)[ik].phi());
+              if (drtemp<drelematch) {drelematch=drtemp; mk=ik;}
             }
             genmatch_ele_pt=(*eles)[mk].pt();
             genmatch_ele_eta=(*eles)[mk].eta();
@@ -1381,9 +1505,8 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             genmatch_ele_e=(*eles)[mk].energy();
             genmatch_ele_dr=drelematch;
          }
-     }
-
-//-------------------------------------------------------------------------------------------------------------------------------------//
+   }//end of MC Info
+// *************************End of Gen Level Information******************//
 
 
 //   if(numCands != 0 ) {
@@ -1558,9 +1681,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	reco::Candidate::LorentzVector uncorrPrunedJet;
 
-	//bool doPruning  = iEvent.getByToken(prunedjetInputToken_, prunedjets_ );
-	//bool doSoftDrop = iEvent.getByToken(softdropjetInputToken_, softdropjets_ );
-        bool doPuppi  = iEvent.getByToken(puppijetInputToken_, puppijets_ );
+	        bool doPuppi  = iEvent.getByToken(puppijetInputToken_, puppijets_ );
 
 
         if( doPuppi ){//1
@@ -1745,153 +1866,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
            massww[0] = lvmassww1.Mag();
            massww[1] = lvmassww2.Mag();
            massww[2] = lvmassww3.Mag();
-           /*double sortmass[3];
-           sortmass[0] = TMath::Abs(massww[0]-1500);
-           sortmass[1] = TMath::Abs(massww[1]-1500);
-           sortmass[2] = TMath::Abs(massww[2]-1500);
-           Int_t *indexx=new Int_t[3];
-           TMath::Sort(3,sortmass,indexx,0);
-           massWWZ=massww[indexx[0]];
-           massWWZ=massww[0];*/
- TLorentzVector lvmassww0;
+     TLorentzVector lvmassww0;
            lvmassww0 = gleptonicV + ghadronicVpuppi+ghadronicVpuppi_2;
            massWWZ = lvmassww0.Mag();
 
            
          }//2
         }//1
-////////////////////////CHSPruning/////////////////////////////////
-/*
-
-	for(size_t ij=0; ij<hadronicVs->size();ij++){
-	   corr_AK81[ij] = 1;
-	   corr_AK8Groomed[ij] = 1;
-	   corr_AK8GroomedSD[ij] = 1;
-	   const pat::Jet& hadronicVa = hadronicVs->at(ij);
-	   reco::Candidate::LorentzVector uncorrJet;
-	   if(not isJEC_) doCorrOnTheFly_ = false;
-      	   if( doCorrOnTheFly_ ){
-      	      uncorrJet = hadronicVa.correctedP4(0);
-      	      jecAK8_->setJetEta( uncorrJet.eta()          );
-      	      jecAK8_->setJetPt ( uncorrJet.pt()           );
-      	      jecAK8_->setJetE  ( uncorrJet.energy()       );
-      	      jecAK8_->setRho   (fastJetRho);
-      	      jecAK8_->setNPV   (nVtx);
-      	      jecAK8_->setJetA  (hadronicVa.jetArea());
-      	      corr_AK81[ij] = jecAK8_->getCorrection();
-      	   }
-           else{uncorrJet = hadronicVa.p4();}
-
-	   if(ij<3){
-	      jetAK8_pt1[ij] = corr_AK81[ij]*uncorrJet.pt();
-	      jetAK8_mass1[ij] = corr_AK81[ij]*uncorrJet.mass();
-              jetAK8_eta1[ij] = uncorrJet.eta();
-  	      jetAK8_jec1[ij] = corr_AK81[ij];
-	   }
-	   TLorentzVector FatJet; FatJet.SetPtEtaPhiE( hadronicVa.pt(), hadronicVa.eta(), hadronicVa.phi(), hadronicVa.energy() ); 
- 	   if( doPruning ){
-	      float dRmin =  999. ; 
-	      pat::Jet prunedjet;
-              for (const pat::Jet &pj : *prunedjets_) {
-     	         TLorentzVector jetPruned; jetPruned.SetPtEtaPhiE( pj.pt(), pj.eta(), pj.phi(), pj.energy() );   
-     	         float dRtmp   = FatJet.DeltaR(jetPruned);
-     	         if( dRtmp < dRmin && dRtmp < 0.8 ){
-     	           dRmin     = dRtmp;
-     	           prunedjet = pj;
-     	         }
-       	         else continue;
-              }
-//		cout<< "check if pass or not" << endl;
-	      uncorrPrunedJet = prunedjet.correctedP4(0);
-              jecAK8Groomed_->setJetEta( uncorrPrunedJet.eta()          );
-              jecAK8Groomed_->setJetPt ( uncorrPrunedJet.pt()           );
-              jecAK8Groomed_->setJetE  ( uncorrPrunedJet.energy()       );
-              jecAK8Groomed_->setRho   (fastJetRho);
-              jecAK8Groomed_->setNPV   (nVtx);
-              jecAK8Groomed_->setJetA  (prunedjet.jetArea());
-	      if(ij<3){corr_AK8Groomed[ij] = jecAK8Groomed_->getCorrection();
-	         prundM[ij] = uncorrPrunedJet.mass();
-		 prundMtestJEC[ij] = corr_AK8Groomed[ij]*prundM[ij];
-
-		 useless =  prundM[ij]+prundMtestJEC[ij]; 		 
-	      }
-	    }
-//		if(ij<3)  {cout << "prundM" << prundM[ij] << endl;}
-
-
-
-        if( doSoftDrop ){
-	        float dRmin =  999. ;
-	        pat::Jet softdropjet;
-		   for (const pat::Jet &sdj : *softdropjets_) {
-	     	     TLorentzVector jetSoftDrop; jetSoftDrop.SetPtEtaPhiE( sdj.pt(), sdj.eta(), sdj.phi(), sdj.energy() );   
-	     	     float dRtmp   = FatJet.DeltaR(jetSoftDrop);
-	     	     if( dRtmp < dRmin && dRtmp < 0.8 ){
-	     		     dRmin  = dRtmp;
-	     		     softdropjet = sdj;
-	     	      }
-		     else continue;
-	           }
-	        reco::Candidate::LorentzVector uncorrSoftDropJet = softdropjet.correctedP4(0);
-                jecAK8GroomedSD_->setJetEta( uncorrSoftDropJet.eta()          );
-                jecAK8GroomedSD_->setJetPt ( uncorrSoftDropJet.pt()           );
-                jecAK8GroomedSD_->setJetE  ( uncorrSoftDropJet.energy()       );
-                jecAK8GroomedSD_->setRho   (fastJetRho);
-                jecAK8GroomedSD_->setNPV   (nVtx);
-                jecAK8GroomedSD_->setJetA  (softdropjet.jetArea());
-                corr_AK8GroomedSD[ij] = jecAK8GroomedSD_->getCorrection();
-	        sdropM[ij] = uncorrSoftDropJet.mass();
-		sdropMtestJEC[ij] = corr_AK8GroomedSD[ij]*sdropM[ij];
-	     }
-
-
-	}
-
-	 int usenumber = 0; double pt_larger=0;
-	 int numvhad = hadronicVs->size();
-	 for( int inum = 0; inum< numvhad; inum++){
-           if(jetAK8_pt1[inum] > pt_larger && fabs(jetAK8_eta1[inum])<2.4 && inum<3) {pt_larger = jetAK8_pt1[inum]; usenumber = inum;}  }
-       if (usenumber<0) { outTree_->Fill(); return;  }
-
-        const pat::Jet& hadronicVab = hadronicVs->at(usenumber);
-
-	        ptVhad       = hadronicVab.pt();  // unpruned uncorrected jet pt
-                jetAK8_pt    = jetAK8_pt1[usenumber]; // unpruned corrected jet pt
-	        yVhad        = hadronicVab.eta();  
-	        yVhadJEC     = jetAK8_eta1[usenumber]; 
-	        phiVhad      = hadronicVab.phi();  
-	        tau1         = hadronicVab.userFloat("NjettinessAK8:tau1");
-	        tau2         = hadronicVab.userFloat("NjettinessAK8:tau2");
-	        tau3         = hadronicVab.userFloat("NjettinessAK8:tau3");
-             
-               //tau1         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
-               // tau2         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
-                //tau3         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau3");
-	        
-            tau21        = tau2/tau1;
-	        
-            //massVhad     = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass"); // uncorrected pruned mass
-	//	massVhadJEC  = corr_AK8Groomed[usenumber]*massVhad; 
-	        //sdrop        = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSSoftDropMass");  
-	        sdrop        = hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");  
-                sdropJEC     = corr_AK8Groomed[usenumber]*sdrop; 
-		jetAK8_mass  = jetAK8_mass1[usenumber];	 
-	for(int ifatjet=0; ifatjet< numvhad ;ifatjet++){    // for TTbar SF studies
-		const pat::Jet& hadronicVab = hadronicVs->at(ifatjet);
-	        if(ifatjet<3) 
-                  { 
-			//jetAK8_SF_mass1[ifatjet] = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-                    //jetAK8_SF_mass2[ifatjet] = jetAK8_jec1[ifatjet]*hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-			jetAK8_SF_mass1[ifatjet] = hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");
-                    jetAK8_SF_mass2[ifatjet] = jetAK8_jec1[ifatjet]*hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");
-                  }
-                 }	
-
-             TLorentzVector  ghadronicV, gravitonJEC;
-	     ghadronicV.SetPtEtaPhiM(jetAK8_pt, yVhadJEC, phiVhad, jetAK8_mass);
-             gravitonJEC = gleptonicV + ghadronicV;
-             candMassJEC     = gravitonJEC.Mag();
-*/
        outTree_->Fill();
 
 //cout<< "test end2" <<endl;
@@ -1989,26 +1970,14 @@ void EDBRTreeMaker::setDummyValues() {
      lep            = -99;
      gen_gra_m      = -99;
      gen_gra_pt     = -99;
+     gen_gra_eta     = -99;
+     gen_rad_m      = -99;
+     gen_rad_pt     = -99;
+     gen_rad_eta     = -99;
      gen_ele_pt     = -99;
      gen_ele_eta    = -99;
      gen_ele_phi    = -99;
      gen_ele_e      = -99;
-     gen_wp_pt     = -99;
-     gen_wp_eta    = -99;
-     gen_wp_phi    = -99;
-     gen_wp_e      = -99;
-     gen_wp1_pt     = -99;
-     gen_wp1_eta    = -99;
-     gen_wp1_phi    = -99;
-     gen_wp1_e      = -99;
-     gen_r_pt     = -99;
-     gen_r_eta    = -99;
-     gen_r_phi    = -99;
-     gen_r_e      = -99;
-     gen_wm_pt     = -99;
-     gen_wm_eta    = -99;
-     gen_wm_phi    = -99;
-     gen_wm_e      = -99;
      gen_mu_pt     = -99;
      gen_mu_eta    = -99;
      gen_mu_phi    = -99;
@@ -2023,6 +1992,22 @@ void EDBRTreeMaker::setDummyValues() {
      genmatch_mu_phi    = -99;
      genmatch_mu_e      = -99;
      genmatch_mu_dr      = -99;
+     gen_ele_pt_2     = -99;
+     gen_ele_eta_2    = -99;
+     gen_ele_phi_2    = -99;
+     gen_ele_e_2      = -99;
+     gen_mu_pt_2     = -99;
+     gen_mu_eta_2    = -99;
+     gen_mu_phi_2    = -99;
+     gen_mu_e_2      = -99;
+     gen_ele_pt_3     = -99;
+     gen_ele_eta_3    = -99;
+     gen_ele_phi_3    = -99;
+     gen_ele_e_3      = -99;
+     gen_mu_pt_3     = -99;
+     gen_mu_eta_3    = -99;
+     gen_mu_phi_3    = -99;
+     gen_mu_e_3      = -99;
      gentop_pt  = -99;
      gentop_eta  = -99;
      gentop_phi  = -99;
@@ -2035,10 +2020,22 @@ void EDBRTreeMaker::setDummyValues() {
      etaGenVlep      = -99;
      phiGenVlep      = -99;
      massGenVlep      = -99;
+     ptGenV_2      = -99;
+     etaGenV_2      = -99;
+     phiGenV_2      = -99;
+     massGenV_2      = -99;
+     ptGenV_3      = -99;
+     etaGenV_3      = -99;
+     phiGenV_3      = -99;
+     massGenV_3      = -99;
      ptGenVhad      = -99;
      etaGenVhad      = -99;
      phiGenVhad      = -99;
      massGenVhad      = -99;
+  
+     status_1       =  -1;
+     status_2       =  -1;
+     status_3       =  -1;
 
 
      ak4jet_hf[0] = -99;
