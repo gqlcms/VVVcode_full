@@ -217,7 +217,7 @@ private:
   double ptGenVhad, etaGenVhad, phiGenVhad, massGenVhad;
   double ptGenV_2, etaGenV_2, phiGenV_2, massGenV_2;
   double ptGenV_3, etaGenV_3, phiGenV_3, massGenV_3;
-  int status_2, status_3;
+    int status_1,status_2, status_3;
   bool IDLoose, IDTight,IDLoose_2, IDTight_2, isHighPt, isHEEP;
   double muchaiso, muneuiso, muphoiso, muPU, muisolation;
   double iso, isoCut, et, trackIso;
@@ -736,6 +736,7 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
   outTree_->Branch("etaGenV_3"        ,&etaGenV_3       ,"etaGenV_3/D"       );
   outTree_->Branch("phiGenV_3"        ,&phiGenV_3       ,"phiGenV_3/D"       );
   outTree_->Branch("massGenV_3"        ,&massGenV_3       ,"massGenV_3/D"       );
+    outTree_->Branch("status_1"           ,&status_1         ,"status_1/I"          );
   outTree_->Branch("status_2"           ,&status_2         ,"status_2/I"          );
   outTree_->Branch("status_3"           ,&status_3         ,"status_3/I"          );
 
@@ -1329,18 +1330,22 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                          if(pw->daughter(i)!=NULL)
                          {//loop on w daughter
                             const reco::Candidate* pl = pw->daughter(i);
-                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)) 
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
                                ptGenVlep = pw->pt();
                                etaGenVlep = pw->eta();
                                phiGenVlep = pw->phi();
                                massGenVlep = pw->mass();
+                                status_1=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                                const reco::Candidate* pl = pw->daughter(ii);
                                if(abs(pl->pdgId())==11)
                                {
                                  gen_ele_pt=pl->pt();
                                  gen_ele_eta=pl->eta();
                                  gen_ele_phi=pl->phi();
                                  gen_ele_e=pl->energy();
+                                   status_1=1;
                                }
                                if(abs(pl->pdgId())==13)
                                {
@@ -1348,7 +1353,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                                  gen_mu_eta=pl->eta();
                                  gen_mu_phi=pl->phi();
                                  gen_mu_e=pl->energy();
+                                   status_1=2;
                                }
+                                if(abs(pl->pdgId())==15)
+                                    {
+                                        status_1=3;
+                                    }
+                                }
                              }//end of if lep-w
         		     if(abs(pl->pdgId())<6) 
                              {
@@ -1356,6 +1367,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			         etaGenVhad = pw->eta();
 			         phiGenVhad = pw->phi();
 			         massGenVhad = pw->mass();
+                                 status_1=4;
                              }
 			   }//end of loop on w daughter
                        }//end of if w				 
@@ -1377,13 +1389,15 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                          if(pw->daughter(i)!=NULL)
                          {//loop on w daughter
                             const reco::Candidate* pl = pw->daughter(i);
-                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)) 
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)||(abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
                                ptGenV_2 = pw->pt();
                                etaGenV_2 = pw->eta();
                                phiGenV_2 = pw->phi();
                                massGenV_2 = pw->mass();
-                               status_2=0;  
+                               status_2=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                               const reco::Candidate* pl = pw->daughter(ii);
                                if(abs(pl->pdgId())==11)
                                {
                                  gen_ele_pt_2=pl->pt();
@@ -1400,26 +1414,35 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                                  gen_mu_e_2=pl->energy();
                                  status_2=2;  
                                }
+				if(abs(pl->pdgId())==15)
+                               {
+                                 status_2=3;
+                               }
+                            }
                              }//end of if lep-w
         		     if(abs(pl->pdgId())<6) 
                              {
-                                 status_2=3;  
+                                 status_2=4;  
                              }
 			   }//end of loop on w daughter
                        }//end of if w-	
                       if(((*genParticles)[ik].daughter(i)->pdgId())==-24)
                        {//if w+
                          const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
+			//cout<<((*genParticles)[ik].daughter(i)->pdgId())<<endl;
                          if(pw->daughter(i)!=NULL)
                          {//loop on w daughter
                             const reco::Candidate* pl = pw->daughter(i);
-                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)) 
+			//cout<<(pl->pdgId())<<endl;
+                            if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
                                ptGenV_3 = pw->pt();
                                etaGenV_3 = pw->eta();
                                phiGenV_3 = pw->phi();
                                massGenV_3 = pw->mass();
-                               status_3=0;  
+                               status_3=0;
+                            for(int ii=0;pw->daughter(ii)!=NULL;ii++){
+                              const reco::Candidate* pl = pw->daughter(ii);
                                if(abs(pl->pdgId())==11)
                                {
                                  gen_ele_pt_3=pl->pt();
@@ -1436,10 +1459,15 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                                  gen_mu_e_3=pl->energy();
                                  status_3=2;  
                                }
+                               if(abs(pl->pdgId())==15)
+                               {
+                                 status_3=3;  
+                               }
+                            }
                              }//end of if lep-w
         		     if(abs(pl->pdgId())<6) 
                              {
-                                 status_3=3;  
+                                 status_3=4;  
                              }
 			   }//end of loop on w daughter
                        }//end of if w+	
@@ -1653,9 +1681,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	reco::Candidate::LorentzVector uncorrPrunedJet;
 
-	//bool doPruning  = iEvent.getByToken(prunedjetInputToken_, prunedjets_ );
-	//bool doSoftDrop = iEvent.getByToken(softdropjetInputToken_, softdropjets_ );
-        bool doPuppi  = iEvent.getByToken(puppijetInputToken_, puppijets_ );
+	        bool doPuppi  = iEvent.getByToken(puppijetInputToken_, puppijets_ );
 
 
         if( doPuppi ){//1
@@ -1840,153 +1866,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
            massww[0] = lvmassww1.Mag();
            massww[1] = lvmassww2.Mag();
            massww[2] = lvmassww3.Mag();
-           /*double sortmass[3];
-           sortmass[0] = TMath::Abs(massww[0]-1500);
-           sortmass[1] = TMath::Abs(massww[1]-1500);
-           sortmass[2] = TMath::Abs(massww[2]-1500);
-           Int_t *indexx=new Int_t[3];
-           TMath::Sort(3,sortmass,indexx,0);
-           massWWZ=massww[indexx[0]];
-           massWWZ=massww[0];*/
- TLorentzVector lvmassww0;
+     TLorentzVector lvmassww0;
            lvmassww0 = gleptonicV + ghadronicVpuppi+ghadronicVpuppi_2;
            massWWZ = lvmassww0.Mag();
 
            
          }//2
         }//1
-////////////////////////CHSPruning/////////////////////////////////
-/*
-
-	for(size_t ij=0; ij<hadronicVs->size();ij++){
-	   corr_AK81[ij] = 1;
-	   corr_AK8Groomed[ij] = 1;
-	   corr_AK8GroomedSD[ij] = 1;
-	   const pat::Jet& hadronicVa = hadronicVs->at(ij);
-	   reco::Candidate::LorentzVector uncorrJet;
-	   if(not isJEC_) doCorrOnTheFly_ = false;
-      	   if( doCorrOnTheFly_ ){
-      	      uncorrJet = hadronicVa.correctedP4(0);
-      	      jecAK8_->setJetEta( uncorrJet.eta()          );
-      	      jecAK8_->setJetPt ( uncorrJet.pt()           );
-      	      jecAK8_->setJetE  ( uncorrJet.energy()       );
-      	      jecAK8_->setRho   (fastJetRho);
-      	      jecAK8_->setNPV   (nVtx);
-      	      jecAK8_->setJetA  (hadronicVa.jetArea());
-      	      corr_AK81[ij] = jecAK8_->getCorrection();
-      	   }
-           else{uncorrJet = hadronicVa.p4();}
-
-	   if(ij<3){
-	      jetAK8_pt1[ij] = corr_AK81[ij]*uncorrJet.pt();
-	      jetAK8_mass1[ij] = corr_AK81[ij]*uncorrJet.mass();
-              jetAK8_eta1[ij] = uncorrJet.eta();
-  	      jetAK8_jec1[ij] = corr_AK81[ij];
-	   }
-	   TLorentzVector FatJet; FatJet.SetPtEtaPhiE( hadronicVa.pt(), hadronicVa.eta(), hadronicVa.phi(), hadronicVa.energy() ); 
- 	   if( doPruning ){
-	      float dRmin =  999. ; 
-	      pat::Jet prunedjet;
-              for (const pat::Jet &pj : *prunedjets_) {
-     	         TLorentzVector jetPruned; jetPruned.SetPtEtaPhiE( pj.pt(), pj.eta(), pj.phi(), pj.energy() );   
-     	         float dRtmp   = FatJet.DeltaR(jetPruned);
-     	         if( dRtmp < dRmin && dRtmp < 0.8 ){
-     	           dRmin     = dRtmp;
-     	           prunedjet = pj;
-     	         }
-       	         else continue;
-              }
-//		cout<< "check if pass or not" << endl;
-	      uncorrPrunedJet = prunedjet.correctedP4(0);
-              jecAK8Groomed_->setJetEta( uncorrPrunedJet.eta()          );
-              jecAK8Groomed_->setJetPt ( uncorrPrunedJet.pt()           );
-              jecAK8Groomed_->setJetE  ( uncorrPrunedJet.energy()       );
-              jecAK8Groomed_->setRho   (fastJetRho);
-              jecAK8Groomed_->setNPV   (nVtx);
-              jecAK8Groomed_->setJetA  (prunedjet.jetArea());
-	      if(ij<3){corr_AK8Groomed[ij] = jecAK8Groomed_->getCorrection();
-	         prundM[ij] = uncorrPrunedJet.mass();
-		 prundMtestJEC[ij] = corr_AK8Groomed[ij]*prundM[ij];
-
-		 useless =  prundM[ij]+prundMtestJEC[ij]; 		 
-	      }
-	    }
-//		if(ij<3)  {cout << "prundM" << prundM[ij] << endl;}
-
-
-
-        if( doSoftDrop ){
-	        float dRmin =  999. ;
-	        pat::Jet softdropjet;
-		   for (const pat::Jet &sdj : *softdropjets_) {
-	     	     TLorentzVector jetSoftDrop; jetSoftDrop.SetPtEtaPhiE( sdj.pt(), sdj.eta(), sdj.phi(), sdj.energy() );   
-	     	     float dRtmp   = FatJet.DeltaR(jetSoftDrop);
-	     	     if( dRtmp < dRmin && dRtmp < 0.8 ){
-	     		     dRmin  = dRtmp;
-	     		     softdropjet = sdj;
-	     	      }
-		     else continue;
-	           }
-	        reco::Candidate::LorentzVector uncorrSoftDropJet = softdropjet.correctedP4(0);
-                jecAK8GroomedSD_->setJetEta( uncorrSoftDropJet.eta()          );
-                jecAK8GroomedSD_->setJetPt ( uncorrSoftDropJet.pt()           );
-                jecAK8GroomedSD_->setJetE  ( uncorrSoftDropJet.energy()       );
-                jecAK8GroomedSD_->setRho   (fastJetRho);
-                jecAK8GroomedSD_->setNPV   (nVtx);
-                jecAK8GroomedSD_->setJetA  (softdropjet.jetArea());
-                corr_AK8GroomedSD[ij] = jecAK8GroomedSD_->getCorrection();
-	        sdropM[ij] = uncorrSoftDropJet.mass();
-		sdropMtestJEC[ij] = corr_AK8GroomedSD[ij]*sdropM[ij];
-	     }
-
-
-	}
-
-	 int usenumber = 0; double pt_larger=0;
-	 int numvhad = hadronicVs->size();
-	 for( int inum = 0; inum< numvhad; inum++){
-           if(jetAK8_pt1[inum] > pt_larger && fabs(jetAK8_eta1[inum])<2.4 && inum<3) {pt_larger = jetAK8_pt1[inum]; usenumber = inum;}  }
-       if (usenumber<0) { outTree_->Fill(); return;  }
-
-        const pat::Jet& hadronicVab = hadronicVs->at(usenumber);
-
-	        ptVhad       = hadronicVab.pt();  // unpruned uncorrected jet pt
-                jetAK8_pt    = jetAK8_pt1[usenumber]; // unpruned corrected jet pt
-	        yVhad        = hadronicVab.eta();  
-	        yVhadJEC     = jetAK8_eta1[usenumber]; 
-	        phiVhad      = hadronicVab.phi();  
-	        tau1         = hadronicVab.userFloat("NjettinessAK8:tau1");
-	        tau2         = hadronicVab.userFloat("NjettinessAK8:tau2");
-	        tau3         = hadronicVab.userFloat("NjettinessAK8:tau3");
-             
-               //tau1         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau1");
-               // tau2         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau2");
-                //tau3         = hadronicVab.userFloat("ak8PFJetsCHSValueMap:NjettinessAK8CHSTau3");
-	        
-            tau21        = tau2/tau1;
-	        
-            //massVhad     = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass"); // uncorrected pruned mass
-	//	massVhadJEC  = corr_AK8Groomed[usenumber]*massVhad; 
-	        //sdrop        = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSSoftDropMass");  
-	        sdrop        = hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");  
-                sdropJEC     = corr_AK8Groomed[usenumber]*sdrop; 
-		jetAK8_mass  = jetAK8_mass1[usenumber];	 
-	for(int ifatjet=0; ifatjet< numvhad ;ifatjet++){    // for TTbar SF studies
-		const pat::Jet& hadronicVab = hadronicVs->at(ifatjet);
-	        if(ifatjet<3) 
-                  { 
-			//jetAK8_SF_mass1[ifatjet] = hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-                    //jetAK8_SF_mass2[ifatjet] = jetAK8_jec1[ifatjet]*hadronicVab.userFloat("ak8PFJetsCHSValueMap:ak8PFJetsCHSPrunedMass");
-			jetAK8_SF_mass1[ifatjet] = hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");
-                    jetAK8_SF_mass2[ifatjet] = jetAK8_jec1[ifatjet]*hadronicVab.userFloat("ak8PFJetsPuppiSoftDropMass");
-                  }
-                 }	
-
-             TLorentzVector  ghadronicV, gravitonJEC;
-	     ghadronicV.SetPtEtaPhiM(jetAK8_pt, yVhadJEC, phiVhad, jetAK8_mass);
-             gravitonJEC = gleptonicV + ghadronicV;
-             candMassJEC     = gravitonJEC.Mag();
-*/
        outTree_->Fill();
 
 //cout<< "test end2" <<endl;
@@ -2146,6 +2032,8 @@ void EDBRTreeMaker::setDummyValues() {
      etaGenVhad      = -99;
      phiGenVhad      = -99;
      massGenVhad      = -99;
+  
+     status_1       =  -1;
      status_2       =  -1;
      status_3       =  -1;
 
