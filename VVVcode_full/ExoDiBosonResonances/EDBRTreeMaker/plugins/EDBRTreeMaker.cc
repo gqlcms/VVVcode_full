@@ -1327,9 +1327,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                       if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
                        {//if w
                          const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
-                         if(pw->daughter(i)!=NULL)
+                         if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
-                            const reco::Candidate* pl = pw->daughter(i);
+                            const reco::Candidate* pl = pw->daughter(0);
                             if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
                                ptGenVlep = pw->pt();
@@ -1386,9 +1386,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                       if(((*genParticles)[ik].daughter(i)->pdgId())==24)
                        {//if w-
                          const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
-                         if(pw->daughter(i)!=NULL)
+                         if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
-                            const reco::Candidate* pl = pw->daughter(i);
+                            const reco::Candidate* pl = pw->daughter(0);
                             if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)||(abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
                                ptGenV_2 = pw->pt();
@@ -1430,9 +1430,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                        {//if w+
                          const reco::Candidate* pw = (*genParticles)[ik].daughter(i);
 			//cout<<((*genParticles)[ik].daughter(i)->pdgId())<<endl;
-                         if(pw->daughter(i)!=NULL)
+                         if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
-                            const reco::Candidate* pl = pw->daughter(i);
+                            const reco::Candidate* pl = pw->daughter(0);
 			//cout<<(pl->pdgId())<<endl;
                             if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
