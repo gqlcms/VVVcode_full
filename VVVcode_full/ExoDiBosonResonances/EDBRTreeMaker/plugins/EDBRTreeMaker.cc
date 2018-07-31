@@ -85,7 +85,9 @@ private:
   virtual void endRun(const edm::Run&, const edm::EventSetup&) override;
 
   virtual bool looseJetID( const pat::Jet& j);
-    virtual const reco::Candidate* findLastW(const reco::Candidate *particle);
+    virtual const reco::Candidate* findLastW(const reco::Candidate *particle,int IDpdg);
+    virtual const reco::Candidate* findFirstW(const reco::Candidate *particle);
+
      virtual bool tightJetID( const pat::Jet& j);
   virtual float dEtaInSeed( const pat::Electron* ele) ;
   virtual void initJetCorrFactors( void );
@@ -769,7 +771,7 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
 
 }
 
-const reco::Candidate*  EDBRTreeMaker::findLastW(const reco::Candidate *particle){
+const reco::Candidate*  EDBRTreeMaker::findLastW(const reco::Candidate *particle,int IDpdg){
     
     int iw=0;
     int pidw=0;
@@ -784,17 +786,30 @@ const reco::Candidate*  EDBRTreeMaker::findLastW(const reco::Candidate *particle
         }
     }
     
-    if( abs(pidw) == 24 ){
+    if( abs(pidw) == IDpdg ){
         pw = particle->daughter(iw);
         //cout<<"check 5 "<<pw->pdgId()<<"    "<<pw->status()<<"   "<<endl;
 
-        return (findLastW(pw));
+        return (findLastW(pw,IDpdg));
         
         
     }
     //cout<<"check 3 "<<pw->pdgId()<<"    "<<pw->status()<<"   "<<pw->daughter(0)->pdgId()<<"    "<<endl;
     return pw;
     }
+
+const reco::Candidate*  EDBRTreeMaker::findFirstW(const reco::Candidate *particle){
+    
+    if (particle->mother(0)!=NULL){
+        
+    if(abs(particle->mother(0)->pdgId()) == 24 )
+        return (findFirstW(particle->mother(0)));
+
+    }
+    //cout<<"check 3 "<<pw->pdgId()<<"    "<<pw->status()<<"   "<<pw->daughter(0)->pdgId()<<"    "<<endl;
+    return particle;
+}
+
 
 EDBRTreeMaker::~EDBRTreeMaker()
 {
@@ -1353,6 +1368,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 // ************************* Gen Level Information******************//
    if(RunOnMC_)
    {//MC Info
+       Int_t havegra=0;
 	  for(size_t ik=0; ik<genParticles->size();ik++)
 	{// loop on gen
               const reco::Candidate* ptop = &(*genParticles)[ik];
@@ -1368,24 +1384,27 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                    genantitop_mass = ptop->mass();}
         //if((abs((*genParticles)[ik].pdgId())!=24)&&(abs((*genParticles)[ik].pdgId())!=9000024)&&(abs((*genParticles)[ik].pdgId())!=9000025))
             //cout<<"(*genParticles)[ik]->pdgId() "<<(*genParticles)[ik].pdgId()<<endl;
- 
+        if( abs((*genParticles)[ik].pdgId())==9000024) havegra=1;
 		if( abs((*genParticles)[ik].pdgId())==9000024 || abs((*genParticles)[ik].pdgId())==6 )
 		{//if Wkk
-                   gen_gra_m=(*genParticles)[ik].mass();
-		   gen_gra_pt=(*genParticles)[ik].pt();
-		   gen_gra_eta=(*genParticles)[ik].eta();
-                for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
+            const reco::Candidate* pwkk0 = &(*genParticles)[ik];
+             const reco::Candidate* pwkk=findLastW(pwkk0,9000024);
+                   gen_gra_m=pwkk->mass();
+		   gen_gra_pt=pwkk->pt();
+		   gen_gra_eta=pwkk->eta();
+                for(int i=0;pwkk->daughter(i)!=NULL;i++)
                    {//loop on Wkk daughter
-                    if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
+                       
+                    if(abs(pwkk->daughter(i)->pdgId())==24)
                        {//if w
                         
-                         const reco::Candidate* pw0 = (*genParticles)[ik].daughter(i);
+                         const reco::Candidate* pw0 = pwkk->daughter(i);
                            
-                           const reco::Candidate* pw= findLastW(pw0);                           //cout<<"check 4  "<<pw->daughter(0)->pdgId()<<endl;
+                           const reco::Candidate* pw= findLastW(pw0,24);                           //cout<<"check 4  "<<pw->daughter(0)->pdgId()<<endl;
                          if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
                             const reco::Candidate* pl = pw->daughter(0);
-                             //cout<<"pw->daughter(0)  "<<pl->pdgId()<<endl;
+                             
 
                             if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
                             {//beign of lep-w
@@ -1430,13 +1449,71 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                              {
                                  status_1=5;
                              }
+                     //if(status_1<0) cout<<"pw->daughter(0)  "<<pl->pdgId()<<endl;
 			   }//end of loop on w daughter
                        }//end of if w				 
                    }//end of loop on Wkk daughter
  		}//end of if Wkk
 
+        //if(status_1<0) cout<<"(*genParticles)[ik].pdgId()"<<(*genParticles)[ik].pdgId()<<endl;
+        if( havegra==0&&abs((*genParticles)[ik].pdgId())==24 )
+        {//if W
+            const reco::Candidate* pw0 = &(*genParticles)[ik];
+            const reco::Candidate* pw=findFirstW(pw0);
+            if(pw->mother(0)->pdgId()!=9000025){
+                const reco::Candidate* pw1= findLastW(pw0,24);
+                if(pw1->daughter(0)!=NULL)
+                {//loop on w daughter
+                    const reco::Candidate* pl = pw1->daughter(0);
 
-		if( abs((*genParticles)[ik].pdgId())==9000025 ) 
+                if( (abs(pl->pdgId())==11) || (abs(pl->pdgId())==13)|| (abs(pl->pdgId())==15)||(abs(pl->pdgId())==12) || (abs(pl->pdgId())==14)|| (abs(pl->pdgId())==16))
+                {//beign of lep-w
+                    ptGenVlep = pw1->pt();
+                    etaGenVlep = pw1->eta();
+                    phiGenVlep = pw1->phi();
+                    massGenVlep = pw1->mass();
+                    status_1=0;
+                    for(int ii=0;pw1->daughter(ii)!=NULL;ii++){
+                        const reco::Candidate* pl = pw1->daughter(ii);
+                        if(abs(pl->pdgId())==11)
+                        {
+                            gen_ele_pt=pl->pt();
+                            gen_ele_eta=pl->eta();
+                            gen_ele_phi=pl->phi();
+                            gen_ele_e=pl->energy();
+                            status_1=1;
+                        }
+                        if(abs(pl->pdgId())==13)
+                        {
+                            gen_mu_pt=pl->pt();
+                            gen_mu_eta=pl->eta();
+                            gen_mu_phi=pl->phi();
+                            gen_mu_e=pl->energy();
+                            status_1=2;
+                        }
+                        if(abs(pl->pdgId())==15)
+                        {
+                            status_1=3;
+                        }
+                    }
+                }//end of if lep-w
+                if(abs(pl->pdgId())<6)
+                {
+                    ptGenVhad = pw1->pt();
+                    etaGenVhad = pw1->eta();
+                    phiGenVhad = pw1->phi();
+                    massGenVhad = pw1->mass();
+                    status_1=4;
+                }
+                if(abs(pl->pdgId())==24)
+                {
+                    status_1=5;
+                }
+                }
+            }
+        }
+        
+		if( abs((*genParticles)[ik].pdgId())==9000025 )
 		{//if Radion
                    gen_rad_m=(*genParticles)[ik].mass();
 		   gen_rad_pt=(*genParticles)[ik].pt();
@@ -1447,7 +1524,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                       if(((*genParticles)[ik].daughter(i)->pdgId())==24)
                        {//if w-
                          const reco::Candidate* pw0 = (*genParticles)[ik].daughter(i);
-                           const reco::Candidate* pw= findLastW(pw0);
+                           const reco::Candidate* pw= findLastW(pw0,24);
                          if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
                             const reco::Candidate* pl = pw->daughter(0);
@@ -1495,7 +1572,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                       if(((*genParticles)[ik].daughter(i)->pdgId())==-24)
                        {//if w+
                          const reco::Candidate* pw0 = (*genParticles)[ik].daughter(i);
-                           const reco::Candidate* pw= findLastW(pw0);
+                           const reco::Candidate* pw= findLastW(pw0,24);
 			//cout<<((*genParticles)[ik].daughter(i)->pdgId())<<endl;
                          if(pw->daughter(0)!=NULL)
                          {//loop on w daughter
