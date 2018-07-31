@@ -180,9 +180,9 @@ private:
 
   double jetAK8puppi_ptJEC, jetAK8puppi_eta, jetAK8puppi_phi, jetAK8puppi_tau1,  jetAK8puppi_tau2, jetAK8puppi_tau3, jetAK8puppi_tau4,jetAK8puppi_tau21, jetAK8puppi_tau42, jetAK8puppi_sd, jetAK8puppi_sdJEC, jetAK8puppi_sdcorr;
   double jetAK8puppi_ptJEC_2, jetAK8puppi_eta_2, jetAK8puppi_phi_2, jetAK8puppi_tau1_2,  jetAK8puppi_tau2_2, jetAK8puppi_tau3_2,jetAK8puppi_tau4_2, jetAK8puppi_tau21_2,jetAK8puppi_tau42_2,  jetAK8puppi_sd_2, jetAK8puppi_sdJEC_2, jetAK8puppi_sdcorr_2;
-  double vbfeta, vbfmjj;
+  double vbfeta, vbfmjj,vbfeta_2, vbfmjj_2;
   int      vbftag;
-  int nj1, nj2;
+  int nj1, nj2,nj1_2, nj2_2;
   double ptlep1, ptlep2;
   double etalep1, etalep2 ;
   double philep1, philep2 ;
@@ -242,9 +242,12 @@ private:
   double METraw_et, METraw_phi, METraw_sumEt;
   double MET_et, MET_phi, MET_sumEt, MET_corrPx, MET_corrPy;
   // AK4 Jets
-  int ak4jet_hf[8],ak4jet_pf[8];
+  int ak4jet_hf[8],ak4jet_pf[8],ak4jet_hf_2[8],ak4jet_pf_2[8];
   double ak4jet_pt[8],ak4jet_pt_uncorr[8],ak4jet_eta[8],ak4jet_phi[8],ak4jet_e[8], ak4jet_dr[8]; 
-  double ak4jet_csv[8],ak4jet_icsv[8],deltaRAK4AK8[8], ak4jet_IDLoose[8], ak4jet_IDTight[8]; 
+  double ak4jet_csv[8],ak4jet_icsv[8],deltaRAK4AK8[8], ak4jet_IDLoose[8], ak4jet_IDTight[8];
+    double ak4jet_pt_2[8],ak4jet_pt_uncorr_2[8],ak4jet_eta_2[8],ak4jet_phi_2[8],ak4jet_e_2[8], ak4jet_dr_2[8];
+    double ak4jet_csv_2[8],ak4jet_icsv_2[8],deltaRAK4AK8_2[8], ak4jet_IDLoose_2[8], ak4jet_IDTight_2[8];
+    
 
 
   void setDummyValues();
@@ -530,9 +533,15 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
 
   outTree_->Branch("vbfeta"    ,&vbfeta   ,"vbfeta/D"   );
   outTree_->Branch("vbfmjj"    ,&vbfmjj   ,"vbfmjj/D"   );
+    outTree_->Branch("vbfeta_2"    ,&vbfeta_2   ,"vbfeta_2/D"   );
+    outTree_->Branch("vbfmjj_2"    ,&vbfmjj_2   ,"vbfmjj_2/D"   );
+
   outTree_->Branch("vbftag"    ,&vbftag   ,"vbftag/I"   );
   outTree_->Branch("nj1"    ,&nj1   ,"nj1/I"   );
   outTree_->Branch("nj2"    ,&nj2   ,"nj2/I"   );
+    outTree_->Branch("nj1_2"    ,&nj1_2   ,"nj1_2/I"   );
+    outTree_->Branch("nj2_2"    ,&nj2_2   ,"nj2_2/I"   );
+
   outTree_->Branch("yVlep"           ,&yVlep          ,"yVlep/D"          );
   outTree_->Branch("yVhad"           ,&yVhad          ,"yVhad/D"          );
   outTree_->Branch("yVhadJEC"           ,&yVhadJEC          ,"yVhadJEC/D"          );
@@ -672,6 +681,20 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
   outTree_->Branch("deltaRAK4AK8"        , deltaRAK4AK8       ,"deltaRAK4AK8[8]/D"       );
   outTree_->Branch("ak4jet_IDLoose"        , ak4jet_IDLoose       ,"ak4jet_IDLoose[8]/D"       );
   outTree_->Branch("ak4jet_IDTight"        , ak4jet_IDTight       ,"ak4jet_IDTight[8]/D"       );
+    outTree_->Branch("ak4jet_hf_2"        , ak4jet_hf_2       ,"ak4jet_hf_2[8]/I"       );
+    outTree_->Branch("ak4jet_pf_2"        , ak4jet_pf_2       ,"ak4jet_pf[8]_2/I"       );
+    outTree_->Branch("ak4jet_pt_2"        , ak4jet_pt_2       ,"ak4jet_pt[8]_2/D"       );
+    outTree_->Branch("ak4jet_pt_uncorr_2"        , ak4jet_pt_uncorr_2       ,"ak4jet_pt_uncorr_2[8]/D"       );
+    outTree_->Branch("ak4jet_eta_2"        , ak4jet_eta_2       ,"ak4jet_eta_2[8]/D"       );
+    outTree_->Branch("ak4jet_phi_2"        , ak4jet_phi_2       ,"ak4jet_phi_2[8]/D"       );
+    outTree_->Branch("ak4jet_e_2"        , ak4jet_e_2       ,"ak4jet_e_2[8]/D"       );
+    outTree_->Branch("ak4jet_dr_2"        , ak4jet_dr_2       ,"ak4jet_dr_2[8]/D"       );
+    outTree_->Branch("ak4jet_csv_2"        , ak4jet_csv_2       ,"ak4jet_csv_2[8]/D"       );
+    outTree_->Branch("ak4jet_icsv_2"        , ak4jet_icsv_2       ,"ak4jet_icsv_2[8]/D"       );
+    outTree_->Branch("deltaRAK4AK8_2"        , deltaRAK4AK8_2       ,"deltaRAK4AK8_2[8]/D"       );
+    outTree_->Branch("ak4jet_IDLoose_2"        , ak4jet_IDLoose_2       ,"ak4jet_IDLoose_2[8]/D"       );
+    outTree_->Branch("ak4jet_IDTight_2"        , ak4jet_IDTight_2       ,"ak4jet_IDTight_2[8]/D"       );
+
 
   /// Gen Level quantities
   outTree_->Branch("gen_gra_m"        ,&gen_gra_m       ,"gen_gra_m/D"       );
@@ -1343,20 +1366,17 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                    genantitop_eta = ptop->eta();
                    genantitop_phi = ptop->phi();
                    genantitop_mass = ptop->mass();}
-        if( (abs((*genParticles)[ik].pdgId())!=9000024) ){
-            if( (abs((*genParticles)[ik].pdgId())!=6) ){
-        //cout<<"(*genParticles)[ik].pdgId()  "<<(*genParticles)[ik].pdgId()<<"  "<< (ptop->pdgId()) <<endl;
-                }}
-        
-		if( abs((*genParticles)[ik].pdgId())==9000024 || abs((*genParticles)[ik].pdgId())==6 ) 
+        //if((abs((*genParticles)[ik].pdgId())!=24)&&(abs((*genParticles)[ik].pdgId())!=9000024)&&(abs((*genParticles)[ik].pdgId())!=9000025))
+            //cout<<"(*genParticles)[ik]->pdgId() "<<(*genParticles)[ik].pdgId()<<endl;
+ 
+		if( abs((*genParticles)[ik].pdgId())==9000024 || abs((*genParticles)[ik].pdgId())==6 )
 		{//if Wkk
                    gen_gra_m=(*genParticles)[ik].mass();
 		   gen_gra_pt=(*genParticles)[ik].pt();
 		   gen_gra_eta=(*genParticles)[ik].eta();
-            
-                   for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
+                for(int i=0;(*genParticles)[ik].daughter(i)!=NULL;i++)
                    {//loop on Wkk daughter
-                      if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
+                    if(abs((*genParticles)[ik].daughter(i)->pdgId())==24)
                        {//if w
                         
                          const reco::Candidate* pw0 = (*genParticles)[ik].daughter(i);
@@ -1801,9 +1821,48 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC+8.37e-07*pow(jetAK8puppi_ptJEC,2)-5.204e-10*pow(jetAK8puppi_ptJEC,3)+1.454e-13*pow(jetAK8puppi_ptJEC,4)-1.504e-17*pow(jetAK8puppi_ptJEC,5);
                 if (fabs(jetAK8puppi_eta)<=1.3){jetAK8puppi_sdcorr=jetAK8puppi_sd*gencorrect*recocorrect_0eta1p3;}
                 else if (fabs(jetAK8puppi_eta)<2.5 && fabs(jetAK8puppi_eta)>1.3){jetAK8puppi_sdcorr=jetAK8puppi_sd*gencorrect*recocorrect_1p3eta2p5;}
+           
+           int usenumber2 = -1; double pt_larger2=0;
+           int numvhad = puppijets_->size();
+           for( int inum = 0; inum< numvhad; inum++){
+               const pat::Jet& Vpuppi = puppijets_->at(inum);
+               if(looseJetID(Vpuppi)<1) continue;
+               if(jetAK8puppi_pt1[inum] > pt_larger2 && fabs(jetAK8puppi_eta1[inum])<2.4 && inum != usenumber3 && inum<4) {pt_larger2 = jetAK8puppi_pt1[inum]; usenumber2 = inum; continue;}
+           }
+           
+           
+           //cout<<"usenumber2"<<usenumber2<<endl;
+           if(usenumber2>-1)  {
+               const pat::Jet& hadronicVpuppi_2 = puppijets_->at(usenumber2);
+               jetAK8puppi_ptJEC_2       = jetAK8puppi_pt1[usenumber2]; // unpruned corrected jet pt
+               jetAK8puppi_eta_2     = jetAK8puppi_eta1[usenumber2]; // unpruned (w/o jec) jet eta
+               jetAK8puppi_phi_2      = hadronicVpuppi_2.phi(); // unpruned (w/o jec) jet phi
+               jetAK8puppi_tau1_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau1");
+               jetAK8puppi_tau2_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau2");
+               jetAK8puppi_tau3_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau3");
+               jetAK8puppi_tau21_2        = jetAK8puppi_tau2_2/jetAK8puppi_tau1_2;
+               jetAK8puppi_tau4_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau4");
+               jetAK8puppi_tau42_2        = jetAK8puppi_tau4_2/jetAK8puppi_tau2_2;
+               
+               jetAK8puppi_sd_2       =  hadronicVpuppi_2.userFloat("ak8PFJetsCHSSoftDropMass"); // uncorrected pruned mass
+               jetAK8puppi_sdJEC_2  =corr_AK8puppiSD[usenumber2]*jetAK8puppi_sd_2;
+               Double_t gencorrect=1.0;
+               Double_t recocorrect_0eta1p3=1.0;
+               Double_t recocorrect_1p3eta2p5=1.0;
+               gencorrect=1.006-1.062*pow(jetAK8puppi_ptJEC_2*0.08,-1.2);
+               recocorrect_0eta1p3=1.093-1.501e-04*jetAK8puppi_ptJEC_2+3.449e-07*pow(jetAK8puppi_ptJEC_2,2)-2.681e-10*pow(jetAK8puppi_ptJEC_2,3)+8.674e-14*pow(jetAK8puppi_ptJEC_2,4)-1.001e-17*pow(jetAK8puppi_ptJEC_2,5);
+               recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC_2+8.37e-07*pow(jetAK8puppi_ptJEC_2,2)-5.204e-10*pow(jetAK8puppi_ptJEC_2,3)+1.454e-13*pow(jetAK8puppi_ptJEC_2,4)-1.504e-17*pow(jetAK8puppi_ptJEC_2,5);
+               if (fabs(jetAK8puppi_eta_2)<=1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_0eta1p3;}
+               else if (fabs(jetAK8puppi_eta_2)<2.5 && fabs(jetAK8puppi_eta_2)>1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_1p3eta2p5;}
+               IDLoose_2 = looseJetID(hadronicVpuppi_2);
+               IDTight_2 = tightJetID(hadronicVpuppi_2);
+               //sdrop_2        = hadronicVpuppi_2.userFloat("ak8PFJetsPuppiSoftDropMass");
+           }
+           
 
-	int nak4 = 0;
-        double tj1=-10.0, tj2=-10.0;
+
+	int nak4 = 0,nak4_2 = 0;
+        double tj1=-10.0, tj2=-10.0,tj1_2=-10.0, tj2_2=-10.0;
  
         for (size_t ik=0; ik<ak4jets->size();ik++)
          {//3
@@ -1821,6 +1880,8 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    } else {uncorrJet = (*ak4jets)[ik].p4();}
 	    
             double dtemp=deltaR(ak4jet_eta[nak4],ak4jet_phi[nak4],hadronicVpuppi.eta(),hadronicVpuppi.phi());
+             double dtemp_2=deltaR(ak4jet_eta_2[nak4_2],ak4jet_phi_2[nak4_2],jetAK8puppi_eta_2,jetAK8puppi_phi_2);
+
 
 	    if( (corr*uncorrJet.pt())>20 && (fabs((*ak4jets)[ik].eta()) < 5.0) && looseJetID((*ak4jets)[ik])>0 && dtemp>0.8 && nak4<8){
                 ak4jet_hf[nak4]=(*ak4jets)[ik].hadronFlavour();
@@ -1844,46 +1905,33 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                
 		nak4 = nak4 + 1;
             }
+            
+             if( (corr*uncorrJet.pt())>20 && (fabs((*ak4jets)[ik].eta()) < 5.0) && looseJetID((*ak4jets)[ik])>0 && dtemp_2>0.8 && nak4_2<8){
+                 ak4jet_hf_2[nak4_2]=(*ak4jets)[ik].hadronFlavour();
+                 ak4jet_pf_2[nak4_2]=(*ak4jets)[ik].partonFlavour();
+                 ak4jet_pt_2[nak4_2] =  corr*uncorrJet.pt();
+                 ak4jet_pt_uncorr_2[nak4_2] =  uncorrJet.pt();
+                 ak4jet_eta_2[nak4_2] = (*ak4jets)[ik].eta();
+                 ak4jet_phi_2[nak4_2] = (*ak4jets)[ik].phi();
+                 ak4jet_e_2[nak4_2] =   corr*uncorrJet.energy();
+                 ak4jet_csv_2[nak4_2] = (*ak4jets)[ik].bDiscriminator("pfCombinedSecondaryVertexV2BJetTags");
+                 ak4jet_icsv_2[nak4_2] = (*ak4jets)[ik].bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags");
+                 deltaRAK4AK8_2[nak4_2] = dtemp_2;
+                 ak4jet_IDLoose_2[nak4_2] = looseJetID((*ak4jets)[ik]);
+                 ak4jet_IDTight_2[nak4_2] = tightJetID((*ak4jets)[ik]);
+                 if(ak4jet_pt_2[nak4_2]>tj1_2 ) {
+                     if(tj1_2>tj2_2) {tj2_2=tj1_2; nj2_2=nj1_2;}
+                     tj1_2=ak4jet_pt_2[nak4_2]; nj1_2=nak4_2;
+                 }
+                 else if(ak4jet_pt_2[nak4_2]>tj2_2){
+                     tj2_2=ak4jet_pt_2[nak4_2]; nj2_2=nak4_2;}
+                 
+                 nak4_2 = nak4_2 + 1;
+             }
+
           }//3
          
-        int usenumber2 = -1; double pt_larger2=0;
-        int numvhad = puppijets_->size();
-        for( int inum = 0; inum< numvhad; inum++){
-               const pat::Jet& Vpuppi = puppijets_->at(inum);
-               if(looseJetID(Vpuppi)<1) continue;
-               if(jetAK8puppi_pt1[inum] > pt_larger2 && fabs(jetAK8puppi_eta1[inum])<2.4 && inum != usenumber3 && inum<4) {pt_larger2 = jetAK8puppi_pt1[inum]; usenumber2 = inum; continue;}
-        }
-           
-
-           //cout<<"usenumber2"<<usenumber2<<endl;
-           if(usenumber2>-1)  {
-           const pat::Jet& hadronicVpuppi_2 = puppijets_->at(usenumber2);
-           jetAK8puppi_ptJEC_2       = jetAK8puppi_pt1[usenumber2]; // unpruned corrected jet pt
-           jetAK8puppi_eta_2     = jetAK8puppi_eta1[usenumber2]; // unpruned (w/o jec) jet eta
-           jetAK8puppi_phi_2      = hadronicVpuppi_2.phi(); // unpruned (w/o jec) jet phi
-           jetAK8puppi_tau1_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau1");
-           jetAK8puppi_tau2_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau2");
-           jetAK8puppi_tau3_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau3");
-           jetAK8puppi_tau21_2        = jetAK8puppi_tau2_2/jetAK8puppi_tau1_2;
-               jetAK8puppi_tau4_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau4");
-               jetAK8puppi_tau42_2        = jetAK8puppi_tau4_2/jetAK8puppi_tau2_2;
-
-           jetAK8puppi_sd_2       =  hadronicVpuppi_2.userFloat("ak8PFJetsCHSSoftDropMass"); // uncorrected pruned mass
-           jetAK8puppi_sdJEC_2  =corr_AK8puppiSD[usenumber2]*jetAK8puppi_sd_2;
-           Double_t gencorrect=1.0;
-           Double_t recocorrect_0eta1p3=1.0;
-           Double_t recocorrect_1p3eta2p5=1.0;
-           gencorrect=1.006-1.062*pow(jetAK8puppi_ptJEC_2*0.08,-1.2);
-           recocorrect_0eta1p3=1.093-1.501e-04*jetAK8puppi_ptJEC_2+3.449e-07*pow(jetAK8puppi_ptJEC_2,2)-2.681e-10*pow(jetAK8puppi_ptJEC_2,3)+8.674e-14*pow(jetAK8puppi_ptJEC_2,4)-1.001e-17*pow(jetAK8puppi_ptJEC_2,5);
-           recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC_2+8.37e-07*pow(jetAK8puppi_ptJEC_2,2)-5.204e-10*pow(jetAK8puppi_ptJEC_2,3)+1.454e-13*pow(jetAK8puppi_ptJEC_2,4)-1.504e-17*pow(jetAK8puppi_ptJEC_2,5);
-           if (fabs(jetAK8puppi_eta_2)<=1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_0eta1p3;}
-           else if (fabs(jetAK8puppi_eta_2)<2.5 && fabs(jetAK8puppi_eta_2)>1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_1p3eta2p5;}
-           IDLoose_2 = looseJetID(hadronicVpuppi_2);
-           IDTight_2 = tightJetID(hadronicVpuppi_2);
-               //sdrop_2        = hadronicVpuppi_2.userFloat("ak8PFJetsPuppiSoftDropMass");
-       }
-    
-
+        
 
 
                if(nj1>-1 && nj2>-1 && ak4jet_pt[nj1]>30. && ak4jet_pt[nj2]>30.) {
@@ -1893,7 +1941,15 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	          vbfj2.SetPtEtaPhiE(ak4jet_pt[nj2], ak4jet_eta[nj2], ak4jet_phi[nj2], ak4jet_e[nj2]);
                   vbfmjj=(vbfj1+vbfj2).Mag();
                }
-              if(vbfeta>4.0 && vbfmjj>400) {vbftag=1;}
+           if(nj1_2>-1 && nj2_2>-1 && ak4jet_pt[nj1_2]>30. && ak4jet_pt[nj2_2]>30.) {
+               vbfeta_2=fabs(ak4jet_eta_2[nj1_2]-ak4jet_eta_2[nj2_2]);
+               TLorentzVector vbfj1_2, vbfj2_2;
+               vbfj1_2.SetPtEtaPhiE(ak4jet_pt_2[nj1_2], ak4jet_eta_2[nj1_2], ak4jet_phi_2[nj1_2], ak4jet_e_2[nj1_2]);
+               vbfj2_2.SetPtEtaPhiE(ak4jet_pt_2[nj2_2], ak4jet_eta_2[nj2_2], ak4jet_phi_2[nj2_2], ak4jet_e_2[nj2_2]);
+               vbfmjj_2=(vbfj1_2+vbfj2_2).Mag();
+           }
+
+              if(vbfeta>4.0 && vbfmjj>400&&vbfeta_2>4.0 && vbfmjj_2>400) {vbftag=1;}
 
 
                 deltaRlepjet = deltaR(etalep1,philep1,jetAK8puppi_eta,jetAK8puppi_phi);
@@ -1910,16 +1966,22 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 delPhijetmet_2 = deltaPhi(jetAK8puppi_phi_2, MET_phi);
                 delPhijetlep_2 = deltaPhi(jetAK8puppi_phi_2, phiVlepJEC);
            
-           TLorentzVector lvmassww1,lvmassww2,lvmassww3;
-           lvmassww1 = gleptonicV + ghadronicVpuppi;
-           lvmassww2 = gleptonicV + ghadronicVpuppi_2;
-           lvmassww3 = ghadronicVpuppi+ ghadronicVpuppi_2;
-           massww[0] = lvmassww1.Mag();
-           massww[1] = lvmassww2.Mag();
-           massww[2] = lvmassww3.Mag();
-     TLorentzVector lvmassww0;
-           lvmassww0 = gleptonicV + ghadronicVpuppi+ghadronicVpuppi_2;
-           massWWZ = lvmassww0.Mag();
+           TLorentzVector lvw[3];
+           lvw[0] = gleptonicV;
+           lvw[1] = ghadronicVpuppi;
+           lvw[2] = ghadronicVpuppi_2;
+           Double_t Wpt[3];
+           Wpt[0]=ptVlepJEC;
+           Wpt[1]=jetAK8puppi_ptJEC;
+           Wpt[2]=jetAK8puppi_ptJEC_2;
+           Int_t *indexx=new Int_t[3];
+           TMath::Sort(3,Wpt,indexx,1);
+           //cout<<Wpt[indexx[0]]<<"   "<<Wpt[indexx[1]]<<"   "<<Wpt[indexx[2]]<<"   "<<endl;
+           massww[0] = (lvw[indexx[0]]+lvw[indexx[1]]).Mag();
+           massww[1] = (lvw[indexx[0]]+lvw[indexx[2]]).Mag();
+           massww[2] = (lvw[indexx[1]]+lvw[indexx[2]]).Mag();
+
+
 
            
          }//2
@@ -1982,9 +2044,15 @@ void EDBRTreeMaker::setDummyValues() {
     
      vbfeta=-10.;
      vbfmjj=-10.;
+    vbfeta_2=-10.;
+    vbfmjj_2=-10.;
+
      vbftag=0;
      nj1=-1;
      nj2=-1;
+    nj1_2=-1;
+    nj2_2=-1;
+
      yVlep          = -99;
      yVhad          = -99;
      yVhadJEC          = -99;
@@ -2089,110 +2157,37 @@ void EDBRTreeMaker::setDummyValues() {
      status_3       =  -1;
 
 
-     ak4jet_hf[0] = -99;
-     ak4jet_hf[1] = -99;
-     ak4jet_hf[2] = -99;
-     ak4jet_hf[3] = -99;
-     ak4jet_hf[4] = -99;
-     ak4jet_hf[5] = -99;
-     ak4jet_hf[6] = -99;
-     ak4jet_hf[7] = -99;
-     ak4jet_pf[0] = -99;
-     ak4jet_pf[1] = -99;
-     ak4jet_pf[2] = -99;
-     ak4jet_pf[3] = -99;
-     ak4jet_pf[4] = -99;
-     ak4jet_pf[5] = -99;
-     ak4jet_pf[6] = -99;
-     ak4jet_pf[7] = -99;     
-     ak4jet_pt[0] = -99;
-     ak4jet_pt[1] = -99; 
-     ak4jet_pt[2] = -99; 
-     ak4jet_pt[3] = -99; 
-     ak4jet_pt[4] = -99; 
-     ak4jet_pt[5] = -99; 
-     ak4jet_pt[6] = -99; 
-     ak4jet_pt[7] = -99; 
-     ak4jet_pt_uncorr[0] = -99;
-     ak4jet_pt_uncorr[1] = -99;
-     ak4jet_pt_uncorr[2] = -99;
-     ak4jet_pt_uncorr[3] = -99;
-     ak4jet_pt_uncorr[4] = -99;
-     ak4jet_pt_uncorr[5] = -99;
-     ak4jet_pt_uncorr[6] = -99;
-     ak4jet_pt_uncorr[7] = -99;
-     ak4jet_eta[0] = -99;
-     ak4jet_eta[1] = -99;
-     ak4jet_eta[2] = -99;
-     ak4jet_eta[3] = -99;
-     ak4jet_eta[4] = -99;
-     ak4jet_eta[5] = -99;
-     ak4jet_eta[6] = -99;
-     ak4jet_eta[7] = -99;
-     ak4jet_phi[0] = -99;
-     ak4jet_phi[1] = -99;
-     ak4jet_phi[2] = -99;
-     ak4jet_phi[3] = -99;
-     ak4jet_phi[4] = -99;
-     ak4jet_phi[5] = -99;
-     ak4jet_phi[6] = -99;
-     ak4jet_phi[7] = -99;
-     ak4jet_e[0] = -99;
-     ak4jet_e[1] = -99;
-     ak4jet_e[2] = -99;
-     ak4jet_e[3] = -99;
-     ak4jet_e[4] = -99;
-     ak4jet_e[5] = -99;
-     ak4jet_e[6] = -99;
-     ak4jet_e[7] = -99;
-     ak4jet_dr[0] = -99;
-     ak4jet_dr[1] = -99;
-     ak4jet_dr[2] = -99;
-     ak4jet_dr[3] = -99;
-     ak4jet_dr[4] = -99;
-     ak4jet_dr[5] = -99;
-     ak4jet_dr[6] = -99;
-     ak4jet_dr[7] = -99;
-     ak4jet_csv[0] = -99;
-     ak4jet_csv[1] = -99;
-     ak4jet_csv[2] = -99;
-     ak4jet_csv[3] = -99;
-     ak4jet_csv[4] = -99;
-     ak4jet_csv[5] = -99;
-     ak4jet_csv[6] = -99;
-     ak4jet_csv[7] = -99;
-     ak4jet_icsv[0] = -99;
-     ak4jet_icsv[1] = -99;
-     ak4jet_icsv[2] = -99;
-     ak4jet_icsv[3] = -99;
-     ak4jet_icsv[4] = -99;
-     ak4jet_icsv[5] = -99;
-     ak4jet_icsv[6] = -99;
-     ak4jet_icsv[7] = -99;
-     deltaRAK4AK8[0] = -99;
-     deltaRAK4AK8[1] = -99;
-     deltaRAK4AK8[2] = -99;
-     deltaRAK4AK8[3] = -99;
-     deltaRAK4AK8[4] = -99;
-     deltaRAK4AK8[5] = -99;
-     deltaRAK4AK8[6] = -99;
-     deltaRAK4AK8[7] = -99;
-     ak4jet_IDLoose[0] = -99;
-     ak4jet_IDLoose[1] = -99;
-     ak4jet_IDLoose[2] = -99;
-     ak4jet_IDLoose[3] = -99;
-     ak4jet_IDLoose[4] = -99;
-     ak4jet_IDLoose[5] = -99;
-     ak4jet_IDLoose[6] = -99;
-     ak4jet_IDLoose[7] = -99;
-     ak4jet_IDTight[0] = -99;
-     ak4jet_IDTight[1] = -99;
-     ak4jet_IDTight[2] = -99;
-     ak4jet_IDTight[3] = -99;
-     ak4jet_IDTight[4] = -99;
-     ak4jet_IDTight[5] = -99;
-     ak4jet_IDTight[6] = -99;
-     ak4jet_IDTight[7] = -99;
+        for(Int_t ii=0;ii<8;ii++){
+        ak4jet_hf[ii] = -99;
+        ak4jet_pf[ii] = -99;
+        ak4jet_pt[ii] = -99;
+        ak4jet_pt_uncorr[ii] = -99;
+        ak4jet_eta[ii] = -99;
+        ak4jet_phi[ii] = -99;
+        ak4jet_e[ii] = -99;
+        ak4jet_dr[ii] = -99;
+        ak4jet_csv[ii] = -99;
+        ak4jet_icsv[ii] = -99;
+        deltaRAK4AK8[ii] = -99;
+        ak4jet_IDLoose[ii] = -99;
+        ak4jet_IDTight[ii] = -99;
+            
+            ak4jet_hf_2[ii] = -99;
+            ak4jet_pf_2[ii] = -99;
+            ak4jet_pt_2[ii] = -99;
+            ak4jet_pt_uncorr_2[ii] = -99;
+            ak4jet_eta_2[ii] = -99;
+            ak4jet_phi_2[ii] = -99;
+            ak4jet_e_2[ii] = -99;
+            ak4jet_dr_2[ii] = -99;
+            ak4jet_csv_2[ii] = -99;
+            ak4jet_icsv_2[ii] = -99;
+            deltaRAK4AK8_2[ii] = -99;
+            ak4jet_IDLoose_2[ii] = -99;
+            ak4jet_IDTight_2[ii] = -99;
+
+        
+    }
  
  
      IDLoose = false;
