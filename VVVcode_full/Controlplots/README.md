@@ -1,25 +1,7 @@
-cd ./PDFs
-root
-root [0] gSystem->AddIncludePath("-I$ROOFITSYS/include")
-root [1] .L PdfDiagonalizer.cc++
-root [2] .q
+run under CMSSW_8_0_26_patch2
 
-root
-root [0] gSystem->AddIncludePath("-I$ROOFITSYS/include")
-root [1] .L RooRelBWRunningWidth.cxx++
-root [2] .q
-
-root
-root [0] gSystem->AddIncludePath("-I$ROOFITSYS/include")
-root [1] .L HWWLVJRooPdfs.cxx++
-root [2] .q
-
-root
-root [0] gSystem->AddIncludePath("-I$ROOFITSYS/include")
-root [1] .L Util.cxx++
-root [2] .q
-
-
-python g1_exo_doFit.py --control -c el
-python g1_exo_doFit.py --control -c mu
+commands to execute:
+python g1_www.py --control -c mu --numak8jets 1
+python g1_www.py --control -c mu --numak8jets 2
+python g1_www.py --control -c mu --numak8jets 1or2
 
