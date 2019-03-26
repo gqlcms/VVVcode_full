@@ -159,7 +159,7 @@ void MuonIdSelector::produce(edm::Event& iEvent,const edm::EventSetup& iSetup)
     } 
   }
 
-  std::unique_ptr<std::vector<pat::Muon> > passingMuons(new std::vector<pat::Muon >);
+  std::auto_ptr<std::vector<pat::Muon> > passingMuons(new std::vector<pat::Muon >);
 
   edm::Handle<pat::MuonCollection > muons;
   iEvent.getByToken(MuonToken_, muons);
@@ -188,6 +188,9 @@ void MuonIdSelector::produce(edm::Event& iEvent,const edm::EventSetup& iSetup)
 
     double pt = mu.pt();
     double eta = mu.eta();
+   // double pt = mu.tunePMuonBestTrack()->pt(); //mu.pt();
+   // double eta = mu.tunePMuonBestTrack()->eta(); //mu.eta();
+
     isTight = mu.isHighPtMuon( *firstGoodVertex ) && (pt > 45) && (fabs(eta) < 2.4) && (trackIso/pt<0.1);//&& (trackIso/pt<0.1);// && (abs(eta)<2.4);//->position());
     isMedium = mu.isHighPtMuon( *firstGoodVertex );
     isLoose = mu.isHighPtMuon( *firstGoodVertex ) && (pt > 20) && (fabs(eta) < 2.4) && (trackIso/pt<0.1);
@@ -235,7 +238,7 @@ void MuonIdSelector::produce(edm::Event& iEvent,const edm::EventSetup& iSetup)
   //std::cout<<"isPassing"<< isPassing << "nPassPteta_" << nPassPteta_ << std::endl;
 
   delete [] isPassing;  
-  iEvent.put(std::move(passingMuons));
+  iEvent.put(passingMuons);
 }
 
  

@@ -45,7 +45,7 @@ patJetsAK8 = cms.EDProducer("PATJetProducer",
                                 "NjettinessAK8:tau1", 
                                 "NjettinessAK8:tau2",
                                 "NjettinessAK8:tau3",
-				"NjettinessAK8:tau4")
+                                "NjettinessAK8:tau4")
             ),
         userClasses = cms.PSet(
             src = cms.VInputTag("")
@@ -69,7 +69,7 @@ patJetsAK8 = cms.EDProducer("PATJetProducer",
                             addJetCorrFactors = cms.bool(True),
                             jetIDMap = cms.InputTag(""),
                             addJetID = cms.bool(False)
-			    )
+                            )
 
 selectedPatJetsAK8 = cms.EDFilter("PATJetSelector",
     src = cms.InputTag("patJetsAK8"),

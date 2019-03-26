@@ -3,9 +3,7 @@ import FWCore.ParameterSet.Config as cms
 maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 readFiles = cms.untracked.vstring()
 secFiles = cms.untracked.vstring() 
-finput = cms.untracked.vstring()
-
-source = cms.Source ("PoolSource",fileNames = readFiles,secondaryFileNames = secFiles, inputCommands=finput,)
+source = cms.Source ("PoolSource",fileNames = readFiles, secondaryFileNames = secFiles)
 readFiles.extend( [
 #       '/store/mc/Fall13dr/RSGravToZZ_kMpl01_M-1000_Tune4C_13TeV-pythia8/AODSIM/tsg_PU20bx25_POSTLS162_V2-v1/20000/D6458543-E870-E311-BFAF-002618943834.root',
 #       '/store/mc/Fall13dr/RSGravToZZ_kMpl01_M-1000_Tune4C_13TeV-pythia8/AODSIM/tsg_PU20bx25_POSTLS162_V2-v1/20000/E8806E66-1A72-E311-9203-003048678B8E.root',
@@ -17,5 +15,3 @@ readFiles.extend( [
 secFiles.extend( [
                ] )
 
-finput.extend( [
-             ] )

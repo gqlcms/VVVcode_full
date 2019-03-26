@@ -6,11 +6,11 @@ goodPuppi = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                         src = cms.InputTag("slimmedJetsAK8")
                         )
 
-
 goodPuppiAK4 = cms.EDFilter("PFJetIDSelectionFunctorFilter",
                         filterParams = pfJetIDSelector.clone(),
                         src = cms.InputTag("slimmedJetsPuppi")
                         )
+
 
 
 ### Cleaning
@@ -49,7 +49,6 @@ cleanPuppiAK4.checkOverlaps.photons = cms.PSet()
 cleanPuppiAK4.checkOverlaps.taus = cms.PSet()
 cleanPuppiAK4.checkOverlaps.tkIsoElectrons = cms.PSet()
 cleanPuppiAK4.finalCut = ""#pt > 30"# & abs(eta) < 2.4"#pt > 20 & abs(eta) < 2.4"
-
 
 
 fatPuppiSequence = cms.Sequence( goodPuppi + cleanPuppi + goodPuppiAK4 + cleanPuppiAK4 )

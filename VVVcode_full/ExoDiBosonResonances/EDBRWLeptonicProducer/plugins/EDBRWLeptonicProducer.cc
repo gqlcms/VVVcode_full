@@ -119,7 +119,7 @@ EDBRWLeptonicProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
    const reco::Candidate& METcand = MET_h->at(0);
    reco::CandidateBaseRef METBaseRef = MET_h->refAt(0);
 
-   std::unique_ptr<reco::CompositeCandidateCollection> outCollection(new reco::CompositeCandidateCollection);
+   std::auto_ptr<reco::CompositeCandidateCollection> outCollection(new reco::CompositeCandidateCollection);
 
    /// Loop on the leptons and combine them with the MET
    for(size_t i = 0; i != lepton_h->size(); ++i) {
@@ -135,7 +135,7 @@ EDBRWLeptonicProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
      if(pass) outCollection->push_back(WLeptonic);
    }
 
-   iEvent.put(std::move(outCollection));
+   iEvent.put(outCollection);
 }
 
 // ------------ method called once each job just before starting event loop  ------------
